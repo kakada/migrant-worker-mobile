@@ -86,7 +86,8 @@ project.ext.react = [
 ]
 
 react {
-    // Config for React plugin
+    // The React plugin will automatically configure the native modules
+    // based on the autolinking system
 }
 
 apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
@@ -118,8 +119,6 @@ def enableProguardInReleaseBuilds = false
  * this variant is about 6MiB larger per architecture than default.
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
-
-def hermesEnabled = project.ext.react.get("enableHermes", true)
 
 android {
     namespace "org.ilabsea.safemigration"
@@ -209,7 +208,7 @@ dependencies {
     implementation "com.facebook.react:flipper-integration"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
-    if (hermesEnabled.toBoolean()) {
+    if (project.ext.react.get("enableHermes", true)) {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
