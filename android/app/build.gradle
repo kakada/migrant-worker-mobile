@@ -85,6 +85,10 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    
+    project.ext.vectoricons = [
+        iconFontNames: [ 'MaterialIcons.ttf' ]
+    ]
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -106,6 +110,8 @@ android {
         }
     }
 }
+
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
