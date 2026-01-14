@@ -6,6 +6,10 @@ import { Color, FontFamily } from '../assets/stylesheets/base_style';
 
 // screens
 import HomeScreen from '../screens/Home';
+import RegisterScreen from '../screens/Register';
+import Contact1280Screen from '../screens/Contact1280';
+import OtherInfoScreen from '../screens/OtherInfo';
+import AboutScreen from '../screens/About';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +33,26 @@ export default class AppNavigator extends React.Component {
             name="HomeScreen"
             component={HomeScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+            options={{ title: 'ចុះឈ្មោះ' }}
+          />
+          <Stack.Screen
+            name="Contact1280Screen"
+            component={Contact1280Screen}
+            options={{ title: 'ទាក់ទងទៅលេខជំនួយ១២៨០' }}
+          />
+          <Stack.Screen
+            name="OtherInfoScreen"
+            component={OtherInfoScreen}
+            options={{ title: 'ចំណាកស្រុកសុវត្ថិភាព' }}
+          />
+          <Stack.Screen
+            name="AboutScreen"
+            component={AboutScreen}
+            options={{ title: 'អំពីកម្មវិធី' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
