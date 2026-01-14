@@ -1,24 +1,26 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import { ThemeContext, getTheme } from 'react-native-material-ui';
 import { setCustomText} from 'react-native-global-props';
 import SplashScreen from 'react-native-splash-screen';
+import { PaperProvider, DefaultTheme } from 'react-native-paper';
 import AppNavigator from './app/navigators/app_navigator';
-import UserWorker from './app/workers/user_worker';
-import Sidekiq from './app/utils/sidekiq';
+import IndexWorker from './app/workers/index_worker';
 import { Color, FontFamily, FontSize } from './app/assets/stylesheets/base_style';
 
+import configureStore from './app/store/configureStore';
+import { Provider } from 'react-redux';
+
 import * as Sentry from '@sentry/react-native';
+import TranslationHelper from './app/translations';
+import RegisteredTokenService from './app/services/registered_token_service';
+import Video from './app/models/Video';
+import Visit from './app/models/Visit';
 
 Sentry.init({
   dsn: 'https://b0b7fac69a6d45abb446ccfdc6e15423@o357910.ingest.sentry.io/5257533',
 });
-
 
 const customTextProps = {
   style: {
@@ -28,27 +30,50 @@ const customTextProps = {
   }
 };
 
-const uiTheme = {
-  fontFamily: FontFamily.body,
-  palette: {
-    primaryColor: Color.primary
+const paperTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Color.primary,
   },
-};
+}
+
+const store = configureStore();
 
 setCustomText(customTextProps);
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+  async UNSAFE_componentWillMount() {
+    await TranslationHelper.configure();
+    await TranslationHelper.loadLanguage();
+  }
+
   componentDidMount() {
     SplashScreen.hide();
-    UserWorker.init();
-    Sidekiq.uploadAllUsers();
+    IndexWorker.init();
+    new RegisteredTokenService().handleSyncingToken();
+    Video.seedData();
+    Visit.upload({
+      pageable_type: 'Page',
+      code: 'app_visit',
+      name: 'App visit',
+    });
   }
 
   render() {
     return (
-      <ThemeContext.Provider value={getTheme(uiTheme)}>
-        <AppNavigator ref="app"/>
-      </ThemeContext.Provider>
+      <Provider store={store}>
+        <PaperProvider theme={paperTheme}>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <BottomSheetModalProvider>
+              <AppNavigator/>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </PaperProvider>
+      </Provider>
     )
   }
 };
+
+export default App;

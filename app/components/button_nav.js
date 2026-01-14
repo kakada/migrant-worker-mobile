@@ -2,36 +2,50 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
-  ScrollView,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { Button, Icon } from 'react-native-material-ui';
-import { Color, FontFamily, FontSize, Style } from '../assets/stylesheets/base_style';
-import PlaySound from '../components/play_sound';
+import { Color, FontFamily, Style } from '../assets/stylesheets/base_style';
+import CustomAudioPlayerComponent from './shared/CustomAudioPlayerComponent';
+import Images from '../utils/images';
 
-export default class Home extends React.Component {
+export default class ButtonNav extends React.Component {
+  renderAudioPlayer() {
+    return <CustomAudioPlayerComponent
+              itemUuid={this.props.audioUuid}
+              audio={this.props.audio}
+              buttonStyle={{marginRight: 10}}
+              isOutline={true}
+            />
+  }
+
+  renderIcon(textColor) {
+    return React.cloneElement(this.props.iconSet || <MaterialIcon/>, {
+              name: this.props.icon, size: this.props.iconSize, color: textColor,
+           })
+  }
+
   render() {
-    let textColor = this.props.active ? '#fff' : Color.primary;
-    let buttonColor = this.props.active ? Color.primary : '#fff';
+    let textColor = this.props.active ? Color.white : Color.primary;
+    let buttonColor = this.props.active ? this.props.buttonColor ? this.props.buttonColor : Color.primary : Color.white;
+    let borderColor = this.props.buttonColor ? this.props.buttonColor : Color.primary;
 
     return (
-      <View style={styles.buttonWrapper}>
+      <View style={[styles.buttonWrapper, Style.boxShadow, { borderColor: borderColor, backgroundColor: buttonColor }, this.props.buttonWrapperStyle]}>
         <TouchableOpacity
           onPress={() => this.props.onPress()}
-          style={[styles.buttonTextWrapper, Style.boxShadow, { backgroundColor: buttonColor }]}
+          style={[styles.buttonTextWrapper, this.props.textWrapperStyle]}
         >
-          <Icon name={this.props.icon} color={textColor} size={24} />
-          <Text style={[styles.buttonText, {color: textColor}]}>{this.props.title}</Text>
+          { !!this.props.icon && this.renderIcon(textColor) }
+          { !!this.props.image && <Image source={Images[this.props.image]} color={textColor} size={this.props.iconSize} style={this.props.imageStyle} />}
+
+          <Text style={[styles.buttonText, { color: textColor }, this.props.textStyle]}>{this.props.title}</Text>
         </TouchableOpacity>
 
-        <PlaySound
-          style={[styles.buttonAudioWrapper, Style.boxShadow]}
-          fileName={this.props.audioFileName}
-          activePlaying={this.props.activePlaying}
-          onPress={(fileName) => this.props.onPressPlaySound(fileName)}/>
+        {this.renderAudioPlayer()}
       </View>
     )
   }
@@ -40,24 +54,26 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   buttonWrapper: {
     flexDirection: 'row',
-    marginBottom: 16
+    marginTop: 16,
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 3,
+    alignItems: 'center',
+    height: 66
   },
   buttonTextWrapper: {
     flexDirection: 'row',
     flex: 1,
-    padding: 16,
+    padding: 14,
     marginRight: 10,
-    borderRadius: 10
   },
   buttonText: {
-    marginLeft: 10,
-    fontFamily: FontFamily.title
+    marginLeft: 20,
+    fontFamily: FontFamily.title,
   },
   buttonAudioWrapper: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 14,
+    padding: 12,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });

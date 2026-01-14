@@ -6,50 +6,87 @@ import {
   Image
 } from 'react-native';
 
+import Sound from 'react-native-sound';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Color } from '../assets/stylesheets/base_style';
-import { Icon } from 'react-native-material-ui';
-import SoundPlayer from 'react-native-sound-player';
 import Images from '../utils/images';
 
 export default class PlaySound extends Component {
-  _onFinishedPlayingSubscription = null;
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      fileName: props.fileName
-    };
-  }
-
-  componentDidMount() {
-    this._onFinishedPlayingSubscription = SoundPlayer.addEventListener('FinishedPlaying', ({ success }) => {
-      this.props.onPress('');
-    })
-  }
 
   componentWillUnmount() {
-    this._onFinishedPlayingSubscription.remove();
+    if (this.sound) this.sound.release();
+  }
+
+  _isAudioPlaying() {
+    // Checking the audio path from main Audio Player with the current audio path
+    if (this.props.audioPlayer && this.props.filePath.includes(this.props.audioPlayer._filename))
+      return true;
+
+    return false;
   }
 
   _playAudio() {
-    this.props.onPress(this.state.fileName);
+    if (this.props.audioPlayer)
+      this.props.audioPlayer.release();
 
-    SoundPlayer.playSoundFile(this.state.fileName, 'mp3');
+    if (this._isAudioPlaying()) {
+      if (this.sound) this.sound.release();
+
+      this.props.updateMainAudioPlayer(null);
+      return;
+    }
+
+    Sound.setCategory('Playback');
+
+    let folder = this.props.filePath.split('/').length > 1 ? '' : Sound.MAIN_BUNDLE;
+
+    this.sound = new Sound(this.props.filePath, folder, (error) => {
+      if (error) { return console.log('failed to load the sound', error); }
+
+      this.sound.play(this.playComplete);
+    });
+
+    if (this.props.updateMainAudioPlayer)
+      this.props.updateMainAudioPlayer(this.sound);
+  }
+
+  playComplete = (success) => {
+    if (success) {
+      this.props.updateMainAudioPlayer(null);
+      console.log('successfully finished playing');
+    } else {
+      console.log('playback failed due to audio decoding errors');
+    }
+  }
+
+  renderVolumeOff() {
+    return (
+      <View style={this.props.style}>
+        <View style={[styles.buttonAudio, {backgroundColor: Color.gray}]}>
+          <Icon name={"md-volume-off"} color={"#fff"} />
+        </View>
+      </View>
+    )
   }
 
   render() {
-    let isActive = (this.props.activePlaying == this.state.fileName);
-    let iconName = this.props.iconName || Images.audio;
-    let playIconName = this.props.playIconName || Images.active_play;
+    if (!this.props.filePath) {
+      return this.renderVolumeOff();
+    }
+
+    let icon = Images.audio;
+
+    if (this._isAudioPlaying())
+      icon = Images.active_play;
 
     return (
       <TouchableOpacity
-        onPress={() => this._playAudio() }
+        onPress={() => this._playAudio()}
         style={this.props.style}
-      >
-        <View style={styles.buttonAudio}>
-          { (!isActive) && <Image source={iconName} color='#fff' style={{width: 36, height: 36}} />}
-          { isActive && <Image source={playIconName} color='#fff' style={{width: 36, height: 36}} />}
+        activeOpacity={0.7}>
+
+        <View style={[styles.buttonAudio, this.props.buttonAudioStyle]}>
+          <Image source={icon} style={[styles.iconStyle, this.props.iconStyle]} />
         </View>
       </TouchableOpacity>
     )
@@ -65,5 +102,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  iconStyle: {
+    width: 36,
+    height: 36
   }
 });
