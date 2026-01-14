@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default Style = StyleSheet.create({
+const Style = StyleSheet.create({
   boxShadow: {
     shadowColor: "#000",
     shadowOffset: {
@@ -37,7 +37,7 @@ export default Style = StyleSheet.create({
     marginBottom: 14,
     paddingBottom: 14
   },
-  avata: {
+  avatar: {
     width: 72,
     height: 72,
     backgroundColor: '#edeff8',
@@ -47,4 +47,6 @@ export default Style = StyleSheet.create({
   },
 
 });
+
+export default Style;
 
