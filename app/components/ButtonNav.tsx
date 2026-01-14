@@ -12,6 +12,10 @@ interface ButtonNavProps {
 }
 
 export default class ButtonNav extends React.Component<ButtonNavProps> {
+  handlePress = () => {
+    this.props.onPress();
+  };
+
   render() {
     const { active } = this.props;
     const textStyle = active ? styles.activeText : styles.inactiveText;
@@ -20,7 +24,7 @@ export default class ButtonNav extends React.Component<ButtonNavProps> {
     return (
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
-          onPress={() => this.props.onPress()}
+          onPress={this.handlePress}
           style={[styles.buttonTextWrapper, Style.boxShadow, buttonStyle]}>
           <Icon
             name={this.props.icon}
