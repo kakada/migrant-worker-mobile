@@ -1,1 +1,0 @@
-export const clearSessionVersion = '0.0.5';
