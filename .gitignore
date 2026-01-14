@@ -1,0 +1,73 @@
+# Node modules
+node_modules/
+.pnp.*
+.pnp.js
+# Expo (if using)
+.expo/
+.expo-shared/
+# React Native / Android
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+android/app/.cxx/
+android/.cxx/
+*.keystore
+
+# React Native / iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcuserstate
+
+# Local dev
+ios/.xcode.env
+ios/.xcode.env.local
+
+# CocoaPods
+Podfile.lock
+# Xcode
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Metro / Watchman
+.expo/
+.expo-shared/
+
+# Misc
+*.log
+*.tmp
+*.swp
+.DS_Store
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Android Studio
+*.iml
+.gradle/
+local.properties
+captures/
+
+# Bundler / Ruby (if using)
+.bundle/
+vendor/bundle/
+
+# Misc OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.bak
+*.orig
