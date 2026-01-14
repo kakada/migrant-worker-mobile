@@ -1,4 +1,4 @@
-package com.migrantworkermobile
+package org.ilabsea.safemigration
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

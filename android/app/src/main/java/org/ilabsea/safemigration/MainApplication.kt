@@ -1,4 +1,4 @@
-package com.migrantworkermobile
+package org.ilabsea.safemigration
 
 import android.app.Application
 import com.facebook.react.PackageList
