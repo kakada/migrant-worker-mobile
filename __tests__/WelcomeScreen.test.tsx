@@ -31,4 +31,3 @@ test('WelcomeScreen renders correctly', async () => {
     ReactTestRenderer.create(<WelcomeScreen navigation={mockNavigation as any} />);
   });
 });
-
