@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -25,43 +26,58 @@ const WelcomeScreen = ({navigation}: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.headerSection}>
-          <Text style={styles.title}>ដំណើរឆ្លងដែនរបស់ខ្ញុំ</Text>
-          <Text style={styles.subtitle}>My Journeys</Text>
-        </View>
-
-        <View style={styles.welcomeSection}>
-          <Text style={styles.welcomeTitle}>Welcome!</Text>
-          <Text style={styles.welcomeText}>
-            Your companion for safe and informed migration journeys
-          </Text>
-        </View>
-
-        <View style={styles.featuresContainer}>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🗺️</Text>
-            <Text style={styles.featureText}>Track Your Journey</Text>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.content}>
+          <View style={styles.headerSection}>
+            <Text style={styles.title}>សូមស្វាគមន៍</Text>
+            <Text style={styles.description}>
+              តើអ្នកជឿជាក់បានសម្រេច ដឹងពីផលប៉ះពាល់វិជ្ជមាន (អវិជ្ជមាន){'\n'}
+              ដែលកើតឡើងបន្ទាប់ពីការធ្វើចំណាក់ទេ?{'\n'}
+              សូមជ្រើសរើសភាសារបស់អ្នកដើម្បីស្តាប់បន្ថែមទៀតបន្ថែមទៀត។
+            </Text>
           </View>
 
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>📝</Text>
-            <Text style={styles.featureText}>Manage Documents</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonCyan]}
+              onPress={handleGetStarted}
+              activeOpacity={0.8}>
+              <View style={styles.buttonContent}>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.iconText}>👤</Text>
+                </View>
+                <Text style={styles.buttonText}>ចូលរួម</Text>
+              </View>
+              <View style={styles.soundIcon}>
+                <Text style={styles.soundIconText}>🔊</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, styles.buttonPink]}
+              onPress={handleGetStarted}
+              activeOpacity={0.8}>
+              <View style={styles.buttonContent}>
+                <View style={styles.iconContainer}>
+                  <Text style={styles.iconText}>❓</Text>
+                </View>
+                <Text style={styles.buttonText}>មន្ត្រីពាក្យថា ខ្មែរ</Text>
+              </View>
+              <View style={styles.soundIcon}>
+                <Text style={styles.soundIconText}>🔊</Text>
+              </View>
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>ℹ️</Text>
-            <Text style={styles.featureText}>Access Resources</Text>
+          <View style={styles.logoSection}>
+            <Text style={styles.logoText}>Spotlight Initiative</Text>
+            <Text style={styles.logoSubtext}>
+              Spotlight Initiative for{'\n'}
+              Myanmar and Thailand Migrant Workers
+            </Text>
           </View>
         </View>
-
-        <TouchableOpacity
-          style={styles.getStartedButton}
-          onPress={handleGetStarted}
-          activeOpacity={0.8}>
-          <Text style={styles.getStartedButtonText}>Get Started</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -69,87 +85,110 @@ const WelcomeScreen = ({navigation}: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#FFFFFF',
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   content: {
     flex: 1,
-    justifyContent: 'space-around',
-    paddingHorizontal: 30,
-    paddingVertical: 40,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    justifyContent: 'space-between',
   },
   headerSection: {
     alignItems: 'center',
     marginTop: 20,
+    marginBottom: 30,
   },
   title: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 10,
+    color: '#333333',
+    marginBottom: 20,
     textAlign: 'center',
   },
-  subtitle: {
-    fontSize: 20,
-    color: '#ffffff',
-    opacity: 0.95,
+  description: {
+    fontSize: 16,
+    color: '#333333',
     textAlign: 'center',
+    lineHeight: 24,
+    paddingHorizontal: 10,
   },
-  welcomeSection: {
-    alignItems: 'center',
+  buttonsContainer: {
     marginVertical: 20,
   },
-  welcomeTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  welcomeText: {
-    fontSize: 18,
-    color: '#ffffff',
-    opacity: 0.9,
-    textAlign: 'center',
-    lineHeight: 26,
-  },
-  featuresContainer: {
-    marginVertical: 20,
-  },
-  feature: {
+  button: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 15,
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    borderRadius: 15,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 4,
   },
-  featureIcon: {
-    fontSize: 32,
-    marginRight: 15,
+  buttonCyan: {
+    backgroundColor: '#17A2B8',
   },
-  featureText: {
-    fontSize: 18,
-    color: '#ffffff',
-    fontWeight: '600',
+  buttonPink: {
+    backgroundColor: '#E91E63',
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
   },
-  getStartedButton: {
-    backgroundColor: '#ffffff',
-    paddingVertical: 18,
-    paddingHorizontal: 40,
-    borderRadius: 30,
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
+    marginRight: 15,
   },
-  getStartedButtonText: {
+  iconText: {
+    fontSize: 24,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    flex: 1,
+  },
+  soundIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  soundIconText: {
+    fontSize: 24,
+  },
+  logoSection: {
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  logoText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2196F3',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  logoSubtext: {
+    fontSize: 12,
+    color: '#666666',
+    textAlign: 'center',
+    lineHeight: 18,
   },
 });
 
