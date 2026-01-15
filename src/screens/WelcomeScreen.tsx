@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
+  Dimensions,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -20,14 +22,23 @@ type Props = {
 };
 
 const WelcomeScreen = ({navigation}: Props) => {
-  const handleGetStarted = () => {
+  const handleRegister = () => {
     navigation.navigate('Home');
+  };
+
+  const handleContinueAsGuest = () => {
+    navigation.navigate('Home');
+  };
+
+  const handleVideoPress = () => {
+    // Video functionality to be implemented
+    console.log('Video pressed');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.content}>
+        <View style={styles.topSection}>
           <View style={styles.headerSection}>
             <Text style={styles.title}>សូមស្វាគមន៍</Text>
             <Text style={styles.description}>
@@ -39,8 +50,8 @@ const WelcomeScreen = ({navigation}: Props) => {
 
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
-              style={[styles.button, styles.buttonCyan]}
-              onPress={handleGetStarted}
+              style={[styles.button, styles.registerButton]}
+              onPress={handleRegister}
               activeOpacity={0.8}>
               <View style={styles.buttonContent}>
                 <View style={styles.iconContainer}>
@@ -48,46 +59,50 @@ const WelcomeScreen = ({navigation}: Props) => {
                 </View>
                 <Text style={styles.buttonText}>ចុះឈ្មោះ</Text>
               </View>
-              <View style={styles.soundIcon}>
-                <Text style={styles.soundIconText}>🔊</Text>
+              <View style={styles.audioButton}>
+                <Text style={styles.audioIcon}>🔊</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button, styles.buttonPink]}
-              onPress={handleGetStarted}
+              style={[styles.button, styles.guestButton]}
+              onPress={handleContinueAsGuest}
               activeOpacity={0.8}>
               <View style={styles.buttonContent}>
                 <View style={styles.iconContainer}>
                   <Text style={styles.iconText}>❓</Text>
                 </View>
-                <Text style={styles.buttonText}>បន្តប្រើប្រាស់ ដោយគ្មាន</Text>
+                <Text style={styles.buttonText}>បន្តចូលមើល ជាភ្ញៀវ</Text>
               </View>
-              <View style={styles.soundIcon}>
-                <Text style={styles.soundIconText}>🔊</Text>
+              <View style={styles.audioButton}>
+                <Text style={styles.audioIcon}>🔊</Text>
               </View>
             </TouchableOpacity>
           </View>
 
           <View style={styles.logoSection}>
-            <Text style={styles.logoText}>Spotlight Initiative</Text>
-            <Text style={styles.logoSubtext}>
-              Eliminating violence{'\n'}
-              against women and girls
+            <Text style={styles.logoTitle}>Spotlight Initiative</Text>
+            <Text style={styles.logoSubtitle}>
+              Eliminating violence{'\n'}against women and girls
             </Text>
             <View style={styles.partnerLogos}>
-              <Text style={styles.partnerLogoText}>🇪🇺  🇺🇳  🎯  ⚖️</Text>
+              <Text style={styles.partnerText}>🇪🇺  🇺🇳  🎯  ⚖️</Text>
             </View>
           </View>
+        </View>
 
-          <View style={styles.illustrationSection}>
-            <View style={styles.illustrationContainer}>
-              <Text style={styles.illustrationEmoji}>👩‍🦱🏠🌴</Text>
-              <TouchableOpacity style={styles.playButton}>
-                <Text style={styles.playButtonText}>▶️</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+        <View style={styles.illustrationSection}>
+          <ImageBackground
+            source={require('../assets/images/icons/welcome_bg.png')}
+            style={styles.illustrationImage}
+            resizeMode="contain">
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={handleVideoPress}
+              activeOpacity={0.8}>
+              <Text style={styles.playIcon}>▶️</Text>
+            </TouchableOpacity>
+          </ImageBackground>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -102,52 +117,49 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
   },
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    justifyContent: 'space-between',
+  topSection: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   headerSection: {
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#333333',
-    marginBottom: 20,
+    marginBottom: 16,
     textAlign: 'center',
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#333333',
     textAlign: 'center',
-    lineHeight: 24,
-    paddingHorizontal: 10,
+    lineHeight: 22,
+    paddingHorizontal: 8,
   },
   buttonsContainer: {
-    marginVertical: 20,
+    marginVertical: 14,
   },
   button: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 20,
-    paddingHorizontal: 25,
-    borderRadius: 15,
-    marginBottom: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginBottom: 14,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 3},
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  buttonCyan: {
+  registerButton: {
     backgroundColor: '#17A2B8',
   },
-  buttonPink: {
+  guestButton: {
     backgroundColor: '#E91E63',
   },
   buttonContent: {
@@ -162,76 +174,68 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 15,
+    marginRight: 12,
   },
   iconText: {
-    fontSize: 24,
+    fontSize: 22,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#FFFFFF',
     flex: 1,
   },
-  soundIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  audioButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     borderWidth: 2,
     borderColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 8,
   },
-  soundIconText: {
-    fontSize: 24,
+  audioIcon: {
+    fontSize: 22,
   },
   logoSection: {
     alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 20,
+    marginTop: 16,
+    marginBottom: 8,
   },
-  logoText: {
-    fontSize: 20,
+  logoTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 4,
   },
-  logoSubtext: {
-    fontSize: 12,
+  logoSubtitle: {
+    fontSize: 11,
     color: '#666666',
     textAlign: 'center',
-    lineHeight: 18,
-    marginBottom: 10,
+    lineHeight: 16,
+    marginBottom: 8,
   },
   partnerLogos: {
-    marginTop: 10,
+    marginTop: 8,
   },
-  partnerLogoText: {
-    fontSize: 20,
+  partnerText: {
+    fontSize: 18,
   },
   illustrationSection: {
-    marginTop: 20,
+    marginTop: 16,
     alignItems: 'center',
   },
-  illustrationContainer: {
-    width: '100%',
-    height: 250,
-    backgroundColor: '#4DB8C4',
-    borderRadius: 15,
+  illustrationImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').width * 1.0,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
-  },
-  illustrationEmoji: {
-    fontSize: 48,
-    marginBottom: 20,
   },
   playButton: {
-    position: 'absolute',
-    bottom: 80,
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     backgroundColor: '#E91E63',
     justifyContent: 'center',
     alignItems: 'center',
@@ -239,11 +243,12 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 8,
-    elevation: 5,
+    elevation: 6,
   },
-  playButtonText: {
+  playIcon: {
     fontSize: 28,
     color: '#FFFFFF',
+    marginLeft: 4,
   },
 });
 
