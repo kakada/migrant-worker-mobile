@@ -34,7 +34,7 @@ jest.mock('@react-navigation/native-stack', () => ({
 
 // Mock for react-native-gesture-handler
 jest.mock('react-native-gesture-handler', () => {
-  const View = require('react-native/Libraries/Components/View/View');
+  const {View} = require('react-native');
   return {
     Swipeable: View,
     DrawerLayout: View,
