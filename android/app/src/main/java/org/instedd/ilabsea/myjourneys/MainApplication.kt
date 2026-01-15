@@ -1,4 +1,4 @@
-package com.migrantworkermobile
+package org.instedd.ilabsea.myjourneys
 
 import android.app.Application
 import com.facebook.react.PackageList
