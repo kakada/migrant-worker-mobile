@@ -46,7 +46,7 @@ const WelcomeScreen = ({navigation}: Props) => {
                 <View style={styles.iconContainer}>
                   <Text style={styles.iconText}>👤</Text>
                 </View>
-                <Text style={styles.buttonText}>ចូលរួម</Text>
+                <Text style={styles.buttonText}>ចុះឈ្មោះ</Text>
               </View>
               <View style={styles.soundIcon}>
                 <Text style={styles.soundIconText}>🔊</Text>
@@ -61,7 +61,7 @@ const WelcomeScreen = ({navigation}: Props) => {
                 <View style={styles.iconContainer}>
                   <Text style={styles.iconText}>❓</Text>
                 </View>
-                <Text style={styles.buttonText}>មន្ត្រីពាក្យថា ខ្មែរ</Text>
+                <Text style={styles.buttonText}>បន្តប្រើប្រាស់ ដោយគ្មាន</Text>
               </View>
               <View style={styles.soundIcon}>
                 <Text style={styles.soundIconText}>🔊</Text>
@@ -72,9 +72,21 @@ const WelcomeScreen = ({navigation}: Props) => {
           <View style={styles.logoSection}>
             <Text style={styles.logoText}>Spotlight Initiative</Text>
             <Text style={styles.logoSubtext}>
-              Spotlight Initiative for{'\n'}
-              Myanmar and Thailand Migrant Workers
+              Eliminating violence{'\n'}
+              against women and girls
             </Text>
+            <View style={styles.partnerLogos}>
+              <Text style={styles.partnerLogoText}>🇪🇺  🇺🇳  🎯  ⚖️</Text>
+            </View>
+          </View>
+
+          <View style={styles.illustrationSection}>
+            <View style={styles.illustrationContainer}>
+              <Text style={styles.illustrationEmoji}>👩‍🦱🏠🌴</Text>
+              <TouchableOpacity style={styles.playButton}>
+                <Text style={styles.playButtonText}>▶️</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -189,6 +201,49 @@ const styles = StyleSheet.create({
     color: '#666666',
     textAlign: 'center',
     lineHeight: 18,
+    marginBottom: 10,
+  },
+  partnerLogos: {
+    marginTop: 10,
+  },
+  partnerLogoText: {
+    fontSize: 20,
+  },
+  illustrationSection: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  illustrationContainer: {
+    width: '100%',
+    height: 250,
+    backgroundColor: '#4DB8C4',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  illustrationEmoji: {
+    fontSize: 48,
+    marginBottom: 20,
+  },
+  playButton: {
+    position: 'absolute',
+    bottom: 80,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#E91E63',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  playButtonText: {
+    fontSize: 28,
+    color: '#FFFFFF',
   },
 });
 
