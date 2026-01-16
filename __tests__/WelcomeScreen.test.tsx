@@ -4,7 +4,7 @@
 
 import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
-import WelcomeScreen from '../src/screens/WelcomeScreen';
+import WelcomeScreen from '../app/screens/WelcomeScreen';
 
 // Mock navigation
 const mockNavigation = {
