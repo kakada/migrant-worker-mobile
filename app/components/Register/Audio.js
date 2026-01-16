@@ -1,0 +1,349 @@
+import React, { Component } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  PermissionsAndroid,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import RNFS from 'react-native-fs';
+
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Sound from 'react-native-sound';
+// import {Recorder} from '@react-native-community/audio-toolkit';
+
+import * as Progress from 'react-native-progress';
+import { Color, Style } from '../../assets/stylesheets/base_style';
+
+export default class Audio extends Component {
+  constructor(props) {
+    super(props);
+
+    let audioPath = props.audioPath || (RNFS.DocumentDirectoryPath + '/' + props.uuid + '.aac');
+    this.state = {
+      recordedTime: 0.0,
+      recording: false,
+      finished: false,
+      isPlaying: false,
+      hasPermission: undefined,
+      audioPath: audioPath,
+      visiblePlayButton: false,
+      visibleProgressBar: false,
+      playSeconds: 0,
+    }
+
+    this.limitTime = 60;
+  }
+
+  componentWillUnmount() {
+    if (!!this.sound) {
+      this.sound.stop();
+      this.sound.release();
+    }
+  }
+
+  componentDidMount() {
+    this._checkPermission().then((hasPermission) => {
+      this.setState({ hasPermission });
+    });
+
+    this._handleRenderingPlayButton();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.audioPlayer && !props.audioPlayer._filename.includes(state.audioPath)) {
+      return {
+        isPlaying: false,
+        playSeconds: state.recordedTime
+      };
+    }
+
+    return null;
+  }
+
+  _handleRenderingPlayButton() {
+    if(!!this.props.audioPath) {
+      this.sound = new Sound(this.props.audioPath, '', (error) => {
+        if (error) {
+          return console.log('failed to load the sound', error);
+        }
+
+        let seconds = Math.ceil(this.sound.getDuration());
+        this.setState({visiblePlayButton: true, recordedTime: seconds, playSeconds: seconds});
+      });
+    }
+  }
+
+  _checkPermission() {
+    if (Platform.OS !== 'android') {
+      return Promise.resolve(true);
+    }
+
+    const rationale = {
+      'title': 'ការអនុញ្ញាតប្រើមីក្រូហ្វូន',
+      'message': 'កម្មវិធីនេះ សុំសិទ្ធិចូលប្រើមីក្រូហ្វូនរបស់អ្នក ដូច្នេះទើបអ្នកអាចថតសម្លេង។'
+    };
+
+    return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO, rationale)
+      .then((result) => {
+        console.log('Permission result:', result);
+        return (result === true || result === PermissionsAndroid.RESULTS.GRANTED);
+      });
+  }
+
+  _stopRecord() {
+    if (this.recorder === null) {
+      console.warn('Can\'t stop, not recording!');
+      return;
+    }
+
+    clearInterval(this.recorderInterval);
+    this.recorder.stop(() => {
+      this.setState({
+        recording: false,
+        playSeconds: this.state.recordedTime,
+        audioPath: this.recorder.fsPath,
+        visibleProgressBar: false,
+        visiblePlayButton: true,
+      });
+
+      this.props.callback(this.recorder.fsPath);
+    });
+  }
+
+  _stopPlaying() {
+    clearInterval(this.countInterval);
+    this.sound.stop();
+    this.setState({
+      isPlaying: false,
+      playSeconds: this.state.recordedTime
+    });
+  }
+
+  _countPlaySeconds = () => {
+    this.countInterval = setInterval(() => {
+      if (this.sound) {
+        this.sound.getCurrentTime((seconds) => {
+          if (Math.ceil(seconds) >= Math.ceil(this.sound.getDuration()))
+            return clearInterval(this.countInterval);
+
+          this.setState({ playSeconds: Math.ceil(seconds) });
+        });
+      }
+    }, 1000);
+  };
+
+  _play() {
+    if (this.props.audioPlayer)
+      this.props.audioPlayer.release();
+
+    const filePath = this.recorder ? this.recorder.fsPath : this.state.audioPath;
+
+    this.sound = new Sound(filePath, '', (error) => {
+      if (error)
+        return console.log('failed to load the sound', error);
+
+      this._countPlaySeconds();
+      this.setState({ isPlaying: true });
+
+      this.sound.play((success) => {
+        if (success) {
+          this.setState({
+            isPlaying: false,
+            playSeconds: this.state.recordedTime
+          });
+        }
+        else
+          this.sound.release();
+      });
+    });
+
+    if (this.props.updateAudioPlayer)
+      this.props.updateAudioPlayer(this.sound);
+  }
+
+  _record() {
+    if (!this.state.hasPermission) {
+      console.warn('Can\'t record, no permission granted!');
+      return;
+    }
+
+    const fileName = `${this.props.uuid}.mp3`;
+
+    this.recorder = new Recorder(fileName, {format: 'mp3'});
+    this.recorder.prepare(() => {
+      this.recorder.record(() => {
+        this.setState({recording: true});
+
+        this.recorderInterval = setInterval(() => {
+          if (this.state.recordedTime == this.limitTime)
+            return this._stopRecord();
+
+          this.setState({
+            recordedTime: this.state.recordedTime + 1,
+          });
+        }, 1000);
+      });
+    });
+  }
+
+  _handleRecording = () => {
+    this._showProgressBar();
+    this._record();
+  }
+
+  _showProgressBar() {
+    this.setState({
+      visibleProgressBar: true,
+      visiblePlayButton: false
+    });
+  }
+
+  _onPress() {
+    this.setState({showHint: true})
+    let self = this;
+    setTimeout(function() {
+      self.setState({showHint: false});
+    }, 3000);
+  }
+
+  _onLongPress() {
+    this.setState({showHint: false});
+    this.longPress = true;
+    this._handleRecording();
+  }
+
+  _onPressOut() {
+    if(!this.longPress) { return }
+
+    this.longPress = false
+    this._stopRecord();
+  }
+
+  _renderButtonMicrophone() {
+    if (this.state.visiblePlayButton) {
+      return;
+    }
+
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        { this.state.showHint && <Text style={styles.hint}>ចុចនិងសង្កត់ដើម្បីថតសម្លេង</Text> }
+        <TouchableOpacity
+          style={[styles.button, {borderWidth: 3, borderColor: Color.primary, backgroundColor: Color.white}]}
+          onPress={() => this._onPress()}
+          onLongPress={() => this._onLongPress()}
+          onPressOut={() => this._onPressOut()}
+        >
+          <AwesomeIcon name={'microphone'} color={Color.primary} size={36} style={{marginRight: 1, height: 36}} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  _onDeleteRecord() {
+    this.setState({
+      visiblePlayButton: false,
+      recordedTime: 0.0,
+      recording: false,
+      isPlaying: false,
+      playSeconds: 0,
+    })
+
+    this.props.callback('');
+  }
+
+  _renderProgressBar() {
+    return (
+      <View style={{marginTop: 20}}>
+        <Progress.Bar progress={this.state.recordedTime / this.limitTime} width={null} color={Color.primary} unfilledColor='rgb(216, 216, 216)' borderColor='transparent' />
+        <Text style={[styles.progressText, {textAlign: 'center'}]}>{this._renderTime(this.state.recordedTime) }</Text>
+      </View>
+    )
+  }
+
+  _renderTime(duration) {
+    let date = new Date(null);
+    date.setSeconds(duration);
+    let time = date.toISOString().substr(14, 5);
+
+    return time;
+  }
+
+  _handlePlaying() {
+    if (this.state.isPlaying) {
+      return this._stopPlaying();
+    }
+    this._play();
+  }
+
+  _renderButtonPlay() {
+    return (
+      <View style={[Style.boxShadow, {marginTop: 13, marginHorizontal: 0, flexDirection: 'row', alignItems: 'center', padding: 10, backgroundColor: '#fff', borderRadius: 8}, this.props.buttonPlayStyle]}>
+        <TouchableOpacity onPress={() => this._handlePlaying()}>
+          { this.state.isPlaying ? <MaterialIcon style={styles.icon} name='pause-circle-outline' size={42} color={Color.delete}/>
+            : <MaterialIcon style={styles.icon} name='play-circle-outline' size={42} color={Color.primary}/>
+          }
+        </TouchableOpacity>
+
+        <View style={{flex: 1, paddingHorizontal: 10}}>
+          <Text>{ this._renderTime(this.state.playSeconds) }</Text>
+        </View>
+
+        <TouchableOpacity onPress={ () => this._onDeleteRecord() }>
+          <AwesomeIcon name="trash-o" size={34} color='rgb(228, 74, 74)' style={{marginRight: 6}} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  render() {
+    return (null);
+    return (
+      <View style={[{height: 180}, this.props.containerStyle]}>
+        { this.state.visiblePlayButton && this._renderButtonPlay() }
+        { this.state.visibleProgressBar && this._renderProgressBar() }
+
+        <View style={{flex: 1}}></View>
+        <View style={styles.controls}>
+          { this._renderButtonMicrophone() }
+        </View>
+      </View>
+    )
+  }
+}
+
+var styles = StyleSheet.create({
+  controls: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  progressText: {
+    fontSize: 22,
+    fontWeight: 'bold'
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 24,
+    padding: Platform.OS === 'ios' ? 15 : 20,
+    width: 74,
+    height: 74,
+    borderRadius: 37,
+    backgroundColor: Color.primary
+  },
+  icon: {
+    height: 50,
+    lineHeight: 50
+  },
+  hint: {
+    backgroundColor: '#111',
+    color: '#fff',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 4
+  }
+});
