@@ -6,7 +6,7 @@ const videoHelper = (() => {
   }
 
   function getTabBarItems() {
-    return Video.getTags().map(tag => ({ key: tag, title_km: tag }));
+    return Video.getTags().map(tag => ({ key: tag, title: tag }));
   }
 })();
 

@@ -84,7 +84,6 @@ export default function ListVideos() {
   const renderTabBar = props => (
     <TabBar
       {...props}
-      getLabelText={({ route }) => route[`title_${i18n.language}`]}
       indicatorStyle={{ backgroundColor: Color.primary, height: 4 }}
       style={{ backgroundColor: '#fff' }}
       pressColor={'rgba(0,0,0,0.2)'}
