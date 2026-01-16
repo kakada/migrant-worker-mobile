@@ -80,7 +80,7 @@ class Home extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setCurrentPlayingAudio: (uuid) => dispatch(setCurrentPlayingAudio(uuid)) 
+    setCurrentPlayingAudio: (uuid) => dispatch(setCurrentPlayingAudio(uuid))
   }
 }
 

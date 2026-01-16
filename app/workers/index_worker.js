@@ -15,10 +15,10 @@ const IndexWorker = (() => {
       console.log("Queue stopped and executed")
     }});
 
-    // UserWorker.init();
-    // QuizWorker.init();
-    // AnswerWorker.init();
-    // VisitWorker.init();
+    UserWorker.init();
+    QuizWorker.init();
+    AnswerWorker.init();
+    VisitWorker.init();
   }
 })();
 

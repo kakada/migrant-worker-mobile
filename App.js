@@ -6,7 +6,7 @@ import { setCustomText} from 'react-native-global-props';
 // import SplashScreen from 'react-native-splash-screen';
 import { PaperProvider, DefaultTheme } from 'react-native-paper';
 import AppNavigator from './app/navigators/app_navigator';
-// import IndexWorker from './src/workers/index_worker';
+import IndexWorker from './app/workers/index_worker';
 import { Color, FontFamily, FontSize } from './app/assets/stylesheets/base_style';
 
 import configureStore from './app/store/configureStore';
@@ -51,9 +51,9 @@ class App extends React.Component {
 
   componentDidMount() {
     // SplashScreen.hide();
-    // IndexWorker.init();
+    IndexWorker.init();
     // new RegisteredTokenService().handleSyncingToken();
-    // Video.seedData();
+    Video.seedData();
     // Visit.upload({
     //   pageable_type: 'Page',
     //   code: 'app_visit',
