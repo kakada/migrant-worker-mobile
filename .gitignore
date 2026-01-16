@@ -13,6 +13,7 @@ android/captures/
 android/app/.cxx/
 android/.cxx/
 *.keystore
+android/app/google-services.json
 
 # React Native / iOS
 ios/Pods/

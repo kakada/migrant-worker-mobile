@@ -54,11 +54,11 @@ class App extends React.Component {
     IndexWorker.init();
     // new RegisteredTokenService().handleSyncingToken();
     Video.seedData();
-    // Visit.upload({
-    //   pageable_type: 'Page',
-    //   code: 'app_visit',
-    //   name: 'App visit',
-    // });
+    Visit.upload({
+      pageable_type: 'Page',
+      code: 'app_visit',
+      name: 'App visit',
+    });
   }
 
   render() {
