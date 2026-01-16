@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, Keyboard, View, Text } from 'react-native'
-import BottomSheet, {
-  BottomSheetView,
+import {
+  BottomSheetModal,
   BottomSheetBackdrop,
-  BottomSheetScrollView
+  BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 
 import {defaultSnapPoints} from '../../constants/modal_constant'
@@ -50,7 +50,7 @@ const BottomSheetModalComponent = (props, ref) => {
   ), []);
 
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={modalRef}
       enablePanDownToClose={true}
       backdropComponent={renderBackdrop}
@@ -62,7 +62,7 @@ const BottomSheetModalComponent = (props, ref) => {
       <BottomSheetScrollView style={styles.contentContainer}>
         { content }
       </BottomSheetScrollView>
-    </BottomSheet>
+    </BottomSheetModal>
   )
 };
 

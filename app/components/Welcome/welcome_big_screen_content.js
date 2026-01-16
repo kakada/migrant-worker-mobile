@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, ImageBackground, Dimensions } from 'react-native';
+import { View, Image, ImageBackground, Dimensions, Alert } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -9,7 +9,7 @@ import { backgroundImageTopPosition } from '../../utils/image_style';
 import { Style } from '../../assets/stylesheets/base_style';
 import WelcomeMessage from '../welcome_message';
 import ButtonNav from '../button_nav';
-// import BottomSheetModalComponent from '../shared/BottomSheetModalComponent';
+import BottomSheetModalComponent from '../shared/BottomSheetModalComponent';
 import RegistrationConfirmationComponent from '../shared/RegistrationConfirmationComponent';
 
 const screenHeight = Dimensions.get('screen').height;
@@ -70,7 +70,6 @@ class WelcomeBigScreenContent extends Component {
           source={Images.welcome_bg}
           style={{ width: '100%', height: '100%', backgroundColor: '#fff'}}
           imageStyle={{
-            borderWidth: 1,
             resizeMode: 'contain',
             alignSelf: 'flex-end',
             top: backgroundImageTopPosition(screenHeight)
@@ -87,7 +86,7 @@ class WelcomeBigScreenContent extends Component {
           </View>
           { this.props.videoButton }
         </ImageBackground>
-
+        <BottomSheetModalComponent ref={this.modalRef} />
       </View>
     )
   }
