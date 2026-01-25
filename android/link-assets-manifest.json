@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "app/assets/fonts/KhSiemreap.ttf",
+      "sha1": "0efd8fb56361c0dc8543beff6a3ec248ac7d2a3e"
+    },
+    {
+      "path": "app/assets/fonts/KhmerOSContent.ttf",
+      "sha1": "b64853519ee2ec3099e4abc1916cca6bb3f2531b"
+    },
+    {
+      "path": "app/assets/fonts/KhmerOSContent-Bold.ttf",
+      "sha1": "8218166ef600a6a51b98117c8e3fb42b591300ad"
+    }
+  ]
+}
