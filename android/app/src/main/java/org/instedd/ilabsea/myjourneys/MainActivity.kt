@@ -1,4 +1,4 @@
-package org.instedd.ilabsea.myjourneys
+package kh.org.childhelplinecambodia.myjourneys
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity

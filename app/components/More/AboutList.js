@@ -24,7 +24,7 @@ class AboutList extends Component {
         />
 
         <ListItem
-          title={"អំពីអ៊ែប ដំណើរឆ្លងដែនរបស់ខ្ញុំ"}
+          title={"អំពីអ៊ែប ដំណើរឆ្លងដែនខ្ញុំ"}
           avata={Images.info}
           onPress={() => this.props.navigation.navigate('AboutScreen', {type: 'safe_and_fair_app'})}
         />
