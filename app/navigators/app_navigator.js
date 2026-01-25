@@ -97,7 +97,7 @@ class AppNavigator extends Component {
         />
         <Stack.Screen name="WelcomeVideoScreen" component={WelcomeVideoScreen}
           options={{
-            title: 'ដំណើរឆ្លងដែនរបស់ខ្ញុំ',
+            title: 'ដំណើរឆ្លងដែនខ្ញុំ',
             headerLeft: null,
           }}
         />

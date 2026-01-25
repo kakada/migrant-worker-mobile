@@ -1,7 +1,7 @@
 const videoList = [
   {
     "code": "01",
-    "title": "សេចក្តីណែនាំពីកម្មវិធីដំណើរឆ្លងដែនរបស់ខ្ញុំ",
+    "title": "សេចក្តីណែនាំពីកម្មវិធីដំណើរឆ្លងដែនខ្ញុំ",
     "url": "https://www.youtube.com/watch?v=kQ-83Nt3EvU&t=14s",
     "category": "all"
   },

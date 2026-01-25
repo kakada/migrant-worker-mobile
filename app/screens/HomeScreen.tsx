@@ -13,7 +13,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Text style={styles.title}>ដំណើរឆ្លងដែនរបស់ខ្ញុំ</Text>
+          <Text style={styles.title}>ដំណើរឆ្លងដែនខ្ញុំ</Text>
           <Text style={styles.subtitle}>My Journeys</Text>
         </View>
 
