@@ -53,12 +53,14 @@ const RegistrationConfirmationComponent = (props) => {
 
   const renderContent = () => {
     return <React.Fragment>
-              <Text style={{lineHeight: 30, color: 'black', fontSize: contentFontSize}}>
+              <Text style={{lineHeight: 30, color: 'black', fontSize: contentFontSize, fontFamily: FontFamily.body}}>
                 សូមអានលក្ខខណ្ឌខាងក្រោម មុនពេលធ្វើការចុះឈ្មោះចូលប្រើប្រាស់កម្មវិធី ដំណើរឆ្លងដែនខ្ញុំ។ ដោយចុច
                 <Text style={{fontFamily: FontFamily.title, fontSize: contentFontSize}}> "យល់ព្រម" </Text>
                 បញ្ចាក់ថាអ្នកបានអាន និងយល់ព្រមទៅនឹង {renderUrl('“គោលការណ៍ឯកជនភាព”', PRIVACY_POLICY_URL)} និង {renderUrl('“គោលការណ៍ និងលក្ខខណ្ឌ”', TERMS_AND_CONDITIONS_URL)} ប្រើប្រាស់កម្មវិធីដំណើរឆ្លងដែនខ្ញុំ។
               </Text>
-              <Text style={{color: 'red', marginTop: 20, textAlign: 'center', fontSize: contentFontSize}}>ការសម្ងាត់ព័ត៌មាន និងសុវត្តិភាពអ្នកជាអាទិភាពរបស់យើង!</Text>
+              <Text style={{color: 'red', marginTop: 20, textAlign: 'center', fontSize: contentFontSize, fontFamily: FontFamily.body}}>
+                ការសម្ងាត់ព័ត៌មាន និងសុវត្តិភាពអ្នកជាអាទិភាពរបស់យើង!
+              </Text>
               {renderButton()}
            </React.Fragment>
   }
@@ -82,7 +84,7 @@ const RegistrationConfirmationComponent = (props) => {
     <BottomSheetModalContentComponent
       title='លក្ខខណ្ឌចុះឈ្មោះប្រើប្រាស់'
       titleIcon={renderIcon()}
-      titleStyle={{flex: 1, marginTop: -2, fontSize: titleFontSize}}
+      titleStyle={{flex: 1, marginTop: -2, fontSize: titleFontSize, fontFamily: FontFamily.title}}
       audioButton={renderAudioBtn('consent-message', 'consent_form_20230929.mp3', Color.primary)}
       titleContainerStyle={{marginBottom: 6, alignItems: 'center'}}
     >
