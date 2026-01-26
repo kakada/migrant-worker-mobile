@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
-import { View, Text, ScrollView, ToastAndroid } from 'react-native';
+import { View, ScrollView, ToastAndroid } from 'react-native';
+import { Text } from 'react-native-paper';
 import { useTranslation } from "react-i18next";
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -85,7 +86,7 @@ const RegisterFormComponent = (props) => {
     return (
       <View style={[{ marginBottom: 24 }, registerHelper.validationBorder(state.sex, 'sex', state.isFormValid)]}>
         <View style={{ marginBottom: 10, flexDirection: 'row' }}>
-          <Text style={{ flex: 1 }}>{t('RegisterScreen.ChooseGender')}</Text>
+          <Text variant="regular" style={{ flex: 1 }}>{t('RegisterScreen.ChooseGender')}</Text>
           <View style={{marginRight: !!state.sex ? 2 : -4}}>
             {renderAudioBtn('gender-picker', 'choose_gender.mp3')}
           </View>

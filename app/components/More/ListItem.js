@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   },
   menuTextTitle: {
     fontSize: 16,
+    fontFamily: FontFamily.body
   },
 });
 

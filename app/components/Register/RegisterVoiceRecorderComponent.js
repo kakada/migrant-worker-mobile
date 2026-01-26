@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { useTranslation } from "react-i18next";
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -25,7 +26,7 @@ const RegisterVoiceRecorderComponent = (props) => {
   return (
     <View style={[styles.voiceRecord, registerHelper.validationBorder(props.voiceRecord, 'voice', props.isFormValid)]}>
       <View style={{flexDirection: 'row'}}>
-        <Text style={{marginTop: 4}}>{t('RegisterScreen.RecordVoice')}</Text>
+        <Text variant="regular" style={{marginTop: 4}}>{t('RegisterScreen.RecordVoice')}</Text>
         <View style={{flex: 1, alignItems: 'flex-end', marginRight: -14, marginTop: 2}}>
           {props.audioButton()}
         </View>

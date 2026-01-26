@@ -8,12 +8,13 @@ import TranslationHelper from '../../translations';
 import { withTranslation } from 'react-i18next';
 
 import DeviceInfo from 'react-native-device-info';
+import { FontFamily } from '../../assets/stylesheets/base_style';
 
 class AppVersion extends Component {
   render() {
     return (
       <View style={styles.appVersion}>
-        <Text>{this.props.t("MoreScreen.AppVersion")}: {DeviceInfo.getVersion()}</Text>
+        <Text style={{fontFamily: FontFamily.body}}>{this.props.t("MoreScreen.AppVersion")}: {DeviceInfo.getVersion()}</Text>
       </View>
     );
   }

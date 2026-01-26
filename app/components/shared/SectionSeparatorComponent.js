@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import { Color } from '../../assets/stylesheets/base_style';
+import { Color, FontFamily } from '../../assets/stylesheets/base_style';
 
 const SectionSeparatorComponent = ({label}) => {
   return (
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   },
   separatorLabel: {
     fontWeight: '700',
+    fontFamily: FontFamily.title,
     color: Color.gray
   },
 });
