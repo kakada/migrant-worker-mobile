@@ -22,7 +22,7 @@ import uuidv4 from '../../utils/uuidv4';
 
 const Title = ({ children }) => {
   return (
-  <Text style={[styles.my, styles.ml1em]}>
+  <Text style={[styles.my, styles.ml1em, { fontFamily: FontFamily.body }]}>
     {children}
   </Text>
   )
