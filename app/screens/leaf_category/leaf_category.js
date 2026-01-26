@@ -39,6 +39,7 @@ const tagsStyles = {
 }
 
 let _this = null;
+const customFonts = [FontFamily.body, FontFamily.title];
 
 class LeafCategory extends Component {
   constructor(props) {
@@ -76,6 +77,7 @@ class LeafCategory extends Component {
             source={{ html: this.state.category.description }}
             contentWidth={Dimensions.get('screen').width}
             tagsStyles={tagsStyles}
+            systemFonts={customFonts}
           />
         }
       </LeafCategoryAudioPlayer>
