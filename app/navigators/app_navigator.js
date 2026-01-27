@@ -122,6 +122,7 @@ class AppNavigator extends Component {
           options={({route, navigation}) => ({
             title: this.props.t("VideosScreen.HeaderTitle"),
             headerTintColor: Color.textBlack,
+            headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.white, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })}
@@ -180,6 +181,7 @@ class AppNavigator extends Component {
           options={({route, navigation}) => ({
             title: this.props.t("VideosScreen.HeaderTitle"),
             headerTintColor: Color.textBlack,
+            headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.white, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })}
@@ -196,6 +198,7 @@ class AppNavigator extends Component {
         <Stack.Screen name="CreateYourStoryScreen" component={CreateYourStoryScreen}
           options={({route, navigation}) => ({
             title: this.props.t('CreateYourStoryScreen.HeaderTitle'),
+            headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.pink, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })}
@@ -219,6 +222,7 @@ class AppNavigator extends Component {
         <Stack.Screen name="LookingForHelpScreen" component={LookingForHelpScreen}
           options={({route, navigation}) => ({
             title: 'ស្វែងរកជំនួយ',
+            headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.yellow, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })} />

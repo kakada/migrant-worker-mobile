@@ -3,6 +3,7 @@ import { View, Modal, Text, StyleSheet } from 'react-native';
 
 import OutlineInfoIcon from './OutlineInfoIcon';
 import AlertActionButtonsComponent from './shared/AlertActionButtonsComponent';
+import { FontFamily } from '../assets/stylesheets/base_style';
 
 class ConfirmModal extends Component {
   render() {
@@ -15,7 +16,7 @@ class ConfirmModal extends Component {
           <View style={styles.modalView}>
             <View style={{flexDirection: 'row', alignContent: 'flex-start'}}>
               <OutlineInfoIcon/>
-              <Text style={{flex: 1}}>{this.props.message}</Text>
+              <Text style={{flex: 1, fontFamily: FontFamily.body}}>{this.props.message}</Text>
             </View>
 
             <AlertActionButtonsComponent

@@ -6,6 +6,7 @@ import Notification from '../../models/Notification';
 import NotificationItem from '../../components/Notification/notificationItem';
 import ConfirmModal from '../../components/confirmModal';
 import uuidv4 from '../../utils/uuidv4';
+import { FontFamily } from '../../assets/stylesheets/base_style';
 
 import { connect } from 'react-redux';
 import { setNotifications } from '../../actions/notificationAction';
@@ -60,7 +61,7 @@ class NotificationList extends Component {
   renderEmptyMessage = () => {
     return <View style={{height: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}>
               <Image source={require('../../assets/images/no_notification.png')} style={{width: 192, height: 192, marginTop: -20}} />
-              <Text style={{color: '#888', marginTop: 16}}>មិនមានសារជូនដំណឹង</Text>
+              <Text style={{color: '#888', marginTop: 16, fontFamily: FontFamily.body}}>មិនមានសារជូនដំណឹង</Text>
            </View>
   }
 
