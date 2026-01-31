@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Platform,
   PermissionsAndroid,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import RNFS from 'react-native-fs';
@@ -13,10 +12,10 @@ import RNFS from 'react-native-fs';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Sound from 'react-native-sound';
-// import {Recorder} from '@react-native-community/audio-toolkit';
+import { AudioRecorder, AudioManager } from 'react-native-audio-api';
 
 import * as Progress from 'react-native-progress';
-import { Color, Style } from '../../assets/stylesheets/base_style';
+import { Color, Style, FontFamily } from '../../assets/stylesheets/base_style';
 
 export default class Audio extends Component {
   constructor(props) {
@@ -101,17 +100,18 @@ export default class Audio extends Component {
     }
 
     clearInterval(this.recorderInterval);
-    this.recorder.stop(() => {
-      this.setState({
-        recording: false,
-        playSeconds: this.state.recordedTime,
-        audioPath: this.recorder.fsPath,
-        visibleProgressBar: false,
-        visiblePlayButton: true,
-      });
 
-      this.props.callback(this.recorder.fsPath);
+    const result = this.recorder.stop();
+    AudioManager.setAudioSessionActivity(false);
+    this.setState({
+      recording: false,
+      playSeconds: this.state.recordedTime,
+      audioPath: result.path,
+      visibleProgressBar: false,
+      visiblePlayButton: true,
     });
+
+    this.props.callback(result.path);
   }
 
   _stopPlaying() {
@@ -140,9 +140,7 @@ export default class Audio extends Component {
     if (this.props.audioPlayer)
       this.props.audioPlayer.release();
 
-    const filePath = this.recorder ? this.recorder.fsPath : this.state.audioPath;
-
-    this.sound = new Sound(filePath, '', (error) => {
+    this.sound = new Sound(this.state.audioPath, '', (error) => {
       if (error)
         return console.log('failed to load the sound', error);
 
@@ -165,29 +163,37 @@ export default class Audio extends Component {
       this.props.updateAudioPlayer(this.sound);
   }
 
-  _record() {
+  async _record() {
     if (!this.state.hasPermission) {
       console.warn('Can\'t record, no permission granted!');
       return;
     }
 
-    const fileName = `${this.props.uuid}.mp3`;
+    this.recorder = new AudioRecorder();
+    // Enables recording to file with default configuration
+    this.recorder.enableFileOutput();
 
-    this.recorder = new Recorder(fileName, {format: 'mp3'});
-    this.recorder.prepare(() => {
-      this.recorder.record(() => {
-        this.setState({recording: true});
-
-        this.recorderInterval = setInterval(() => {
-          if (this.state.recordedTime == this.limitTime)
-            return this._stopRecord();
-
-          this.setState({
-            recordedTime: this.state.recordedTime + 1,
-          });
-        }, 1000);
-      });
+    // Activate audio session
+    const success = await AudioManager.setAudioSessionActivity(true);
+    const result = this.recorder.start({
+      fileNameOverride: this.props.uuid
     });
+    if (result.status === 'error') {
+      console.warn(result.message);
+      return;
+    }
+    this.setState({
+      recording: true,
+      audioPath: result.path
+    });
+    this.recorderInterval = setInterval(() => {
+      if (this.state.recordedTime == this.limitTime)
+        return this._stopRecord();
+
+      this.setState({
+        recordedTime: this.state.recordedTime + 1,
+      });
+    }, 1000);
   }
 
   _handleRecording = () => {
@@ -344,6 +350,7 @@ var styles = StyleSheet.create({
     color: '#fff',
     padding: 10,
     borderRadius: 8,
-    marginBottom: 4
+    marginBottom: 4,
+    fontFamily: FontFamily.body
   }
 });
