@@ -300,7 +300,7 @@ export default class Audio extends Component {
   }
 
   render() {
-    return (null);
+    // return (null);
     return (
       <View style={[{height: 180}, this.props.containerStyle]}>
         { this.state.visiblePlayButton && this._renderButtonPlay() }
