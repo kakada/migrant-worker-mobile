@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Share } from 'react-native';
+import { View, Share } from 'react-native';
+import { Text } from 'react-native-paper';
 
 import Images from '../../utils/images';
 import { addStatistic } from '../../utils/statistic';
@@ -14,7 +15,7 @@ class AboutList extends Component {
     return (
       <View>
         <View style={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 5 }}>
-          <Text>អំពី</Text>
+          <Text variant="regular">អំពី</Text>
         </View>
 
         <ListItem

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import { Color, FontFamily, Style } from '../assets/stylesheets/base_style';
+import { Color, FontFamily, Style, FontSize } from '../assets/stylesheets/base_style';
 import CustomAudioPlayerComponent from './shared/CustomAudioPlayerComponent';
 import Images from '../utils/images';
 
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   buttonText: {
     marginLeft: 20,
     fontFamily: FontFamily.title,
+    fontSize: FontSize.body
   },
   buttonAudioWrapper: {
     padding: 12,

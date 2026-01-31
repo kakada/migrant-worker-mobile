@@ -36,6 +36,10 @@ const paperTheme = {
     ...DefaultTheme.colors,
     primary: Color.primary,
   },
+  fonts: {
+    ...DefaultTheme.fonts,
+    regular: { fontFamily: FontFamily.body }
+  }
 }
 
 const store = configureStore();

@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
   },
   userEditText: {
     color: Color.gray,
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: FontFamily.body
   },
   nextIcon: {
     width: 15,

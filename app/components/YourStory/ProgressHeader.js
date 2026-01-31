@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   },
   topHeaderProgressLabel: {
     color: Color.white,
+    fontFamily: FontFamily.body,
     fontSize: 13,
     backgroundColor: '#902343',
     paddingHorizontal: 10,

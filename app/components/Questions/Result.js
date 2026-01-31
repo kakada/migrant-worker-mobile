@@ -5,7 +5,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { Color, Style } from '../../assets/stylesheets/base_style';
+import { Color, Style, FontFamily } from '../../assets/stylesheets/base_style';
 
 import { withTranslation } from 'react-i18next';
 
@@ -48,7 +48,7 @@ class QuestionsResult extends Component {
           showsVerticalScrollIndicator={false}>
 
           <View style={[Style.container, Style.card, {flexDirection: 'row'}]}>
-            <Text style={{flex: 1}}>{this.state.message}</Text>
+            <Text style={{flex: 1, fontFamily: FontFamily.body}}>{this.state.message}</Text>
             <CustomAudioPlayerComponent
               itemUuid={`question_result`}
               audio={this.state.audio}

@@ -36,7 +36,7 @@ class NotificationItem extends React.Component {
       >
         <View style={{flexDirection: 'row'}}>
           <Icon name={'delete'} size={20} style={{color: '#fff'}}/>
-          <Text style={[{color: 'white', fontSize: 14, marginLeft: 2}]}>លុប</Text>
+          <Text style={[{color: 'white', fontSize: 14, fontFamily: FontFamily.body, marginLeft: 2}]}>លុប</Text>
         </View>
       </RectButton>
     )
@@ -82,7 +82,7 @@ class NotificationItem extends React.Component {
           </View>
 
           <View style={{borderWidth: 0, flexDirection: 'row', alignItems: 'center'}}>
-            <Text numberOfLines={1} style={{fontSize: 12, flex: 1}}>{ this.props.notification.content }</Text>
+            <Text numberOfLines={1} style={{fontSize: 12, fontFamily: FontFamily.body, flex: 1}}>{ this.props.notification.content }</Text>
             { !this.props.notification.is_read &&
               <View style={styles.badge} />
             }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Share, Linking } from 'react-native';
+import { View, Share, Linking } from 'react-native';
+import { Text } from 'react-native-paper';
 
 import Images from '../../utils/images';
 import { addStatistic } from '../../utils/statistic';
@@ -49,7 +50,7 @@ class Other extends Component {
     return (
       <View>
         <View style={{ paddingHorizontal: 16, paddingTop: 10, paddingBottom: 5 }}>
-          <Text>ផ្សេងៗ</Text>
+          <Text variant="regular">ផ្សេងៗ</Text>
         </View>
 
         <ListItem

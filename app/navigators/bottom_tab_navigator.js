@@ -71,6 +71,7 @@ function VideoTab() {
         options={({route, navigation}) => ({
           title: "វីដេអូ",
           headerTintColor: Color.textBlack,
+          headerShadowVisible: false,
           headerStyle: { backgroundColor: Color.white, elevation: 0 },
         })}
       />

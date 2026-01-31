@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Dialog, Portal } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import { Color, FontFamily } from '../assets/stylesheets/base_style';
+import { Color, FontFamily, FontSize } from '../assets/stylesheets/base_style';
 import OutlineInfoIcon from './OutlineInfoIcon';
 import AppIcon from './AppIcon';
 
@@ -44,9 +44,9 @@ class AlertMessage extends Component {
     return <View style={{flexDirection: 'row', alignItems: 'center'}}>
               {this.renderIcon()}
               { this.props.title ?
-                <Text style={{fontFamily: FontFamily.title, flex: 1}}>{this.props.title}</Text>
+                <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, flex: 1}}>{this.props.title}</Text>
                 :
-                <Text style={{fontFamily: FontFamily.title, flex: 1}}>សូមចំណាំ</Text>
+                <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, flex: 1}}>សូមចំណាំ</Text>
               }
               { !this.props.hideAudio && this.renderAudioPlayer() }
             </View>
@@ -60,7 +60,7 @@ class AlertMessage extends Component {
         >
           <Dialog.Content style={{marginTop: 16}}>
             {this.renderTitle()}
-            <Text style={{marginTop: 16}}>{ this.props.message }</Text>
+            <Text style={{marginTop: 16, fontFamily: FontFamily.body}}>{ this.props.message }</Text>
           </Dialog.Content>
 
           <Dialog.Actions style={{paddingBottom: 18, paddingRight: 18}}>

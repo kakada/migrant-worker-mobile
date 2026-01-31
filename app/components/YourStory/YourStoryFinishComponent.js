@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import AppIcon from '../AppIcon';
 import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
-import { Color, FontFamily, Style } from '../../assets/stylesheets/base_style';
+import { Color, FontFamily, FontSize, Style } from '../../assets/stylesheets/base_style';
 
 const YourStoryFinishComponent = (props) => {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ const YourStoryFinishComponent = (props) => {
     return <View style={[Style.card]}>
               <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
                 <AppIcon iconType='clap' customStyles={{ marginRight: 15 }}/>
-                <Text style={{fontFamily: FontFamily.title, flex: 1}}>អបអរសារទរ</Text>
+                <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, flex: 1}}>អបអរសារទរ</Text>
                 <CustomAudioPlayerComponent
                   itemUuid='your-story-finish-message'
                   audio="congratulation_for_more_knowledge.mp3"
@@ -23,7 +23,7 @@ const YourStoryFinishComponent = (props) => {
                 />
               </View>
 
-              <Text>អ្នកបានដឹងគន្លឹះសំខាន់ខ្លះៗ ដែលគាំទ្រអ្នកក្នុងការទទួលបានការងារដោយសុវត្ថិភាពនៅប្រទេសគោលដៅ</Text>
+              <Text style={{fontFamily: FontFamily.body}}>អ្នកបានដឹងគន្លឹះសំខាន់ខ្លះៗ ដែលគាំទ្រអ្នកក្នុងការទទួលបានការងារដោយសុវត្ថិភាពនៅប្រទេសគោលដៅ</Text>
            </View>
   }
 
