@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   StatusBar,
   FlatList,
   ToastAndroid,
@@ -121,7 +120,7 @@ class LookingForHelp extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <StatusBar barStyle={'light-content'} backgroundColor={Color.yellow} />
 
         <FlatList 
@@ -135,7 +134,7 @@ class LookingForHelp extends React.Component {
           refreshing={ this.state.isFetching }
           stickyHeaderIndices={[0, 1]}
         />
-      </SafeAreaView>
+      </View>
     )
   }
 }

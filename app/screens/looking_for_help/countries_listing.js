@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  SafeAreaView,
   FlatList,
   TouchableOpacity,
   Text,
@@ -130,10 +129,10 @@ class CountriesListing extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <StatusBar barStyle={'light-content'} backgroundColor={Color.yellow} />
         { this._renderContent() }
-      </SafeAreaView>
+      </View>
     )
   }
 }

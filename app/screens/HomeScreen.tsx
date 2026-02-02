@@ -6,60 +6,54 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
-          <Text style={styles.title}>ដំណើរឆ្លងដែនខ្ញុំ</Text>
-          <Text style={styles.subtitle}>My Journeys</Text>
-        </View>
+    <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View style={styles.header}>
+        <Text style={styles.title}>ដំណើរឆ្លងដែនខ្ញុំ</Text>
+        <Text style={styles.subtitle}>My Journeys</Text>
+      </View>
 
-        <View style={styles.content}>
-          <Text style={styles.welcomeText}>Welcome to My Journeys!</Text>
-          <Text style={styles.description}>
-            This app helps migrant workers track and manage their journey.
+      <View style={styles.content}>
+        <Text style={styles.welcomeText}>Welcome to My Journeys!</Text>
+        <Text style={styles.description}>
+          This app helps migrant workers track and manage their journey.
+        </Text>
+      </View>
+
+      <View style={styles.featuresSection}>
+        <Text style={styles.sectionTitle}>Features</Text>
+        
+        <TouchableOpacity style={styles.featureCard}>
+          <Text style={styles.featureTitle}>🗺️ Track Your Journey</Text>
+          <Text style={styles.featureDescription}>
+            Keep track of your travels and important locations
           </Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.featuresSection}>
-          <Text style={styles.sectionTitle}>Features</Text>
-          
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureTitle}>🗺️ Track Your Journey</Text>
-            <Text style={styles.featureDescription}>
-              Keep track of your travels and important locations
-            </Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.featureCard}>
+          <Text style={styles.featureTitle}>📝 Document Management</Text>
+          <Text style={styles.featureDescription}>
+            Store and manage your important documents
+          </Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureTitle}>📝 Document Management</Text>
-            <Text style={styles.featureDescription}>
-              Store and manage your important documents
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureTitle}>ℹ️ Information & Resources</Text>
-            <Text style={styles.featureDescription}>
-              Access important information and resources
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        <TouchableOpacity style={styles.featureCard}>
+          <Text style={styles.featureTitle}>ℹ️ Information & Resources</Text>
+          <Text style={styles.featureDescription}>
+            Access important information and resources
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
   scrollContent: {
     paddingBottom: 20,
+    backgroundColor: '#f5f5f5',
   },
   header: {
     backgroundColor: '#2196F3',

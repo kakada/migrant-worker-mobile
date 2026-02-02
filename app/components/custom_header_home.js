@@ -21,7 +21,7 @@ const CustomHeaderHome = withTranslation()((props) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
 
       <View style={styles.headerLeft}>
         <Text style={styles.welcomeText}>{props.t('HomeScreen.WelcomeTo')}</Text>
@@ -41,7 +41,7 @@ const CustomHeaderHome = withTranslation()((props) => {
         </TouchableOpacity>
       </View>
 
-    </SafeAreaView>
+    </View>
   )
 });
 

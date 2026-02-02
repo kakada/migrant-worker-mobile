@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, ImageBackground, Dimensions, PixelRatio } from 'react-native';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Images from '../../utils/images';
 
@@ -70,8 +71,10 @@ class WelcomeSmallScreenContent extends Component {
   }
 
   render() {
+    const { insets } = this.props;
+
     return (
-      <View style={{flexGrow: 1, backgroundColor: '#fff'}}>
+      <View style={{flexGrow: 1, backgroundColor: '#fff', paddingTop: insets.top}}>
         <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={{flex: 1}}>
             <View style={{padding: 16, paddingTop: 0}}>
@@ -100,4 +103,4 @@ class WelcomeSmallScreenContent extends Component {
   }
 }
 
-export default WelcomeSmallScreenContent;
+export default withSafeAreaInsets(WelcomeSmallScreenContent);
