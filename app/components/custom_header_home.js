@@ -5,10 +5,10 @@ import {
   StyleSheet,
   Image,
   Text,
-  SafeAreaView,
   TouchableOpacity
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Color, FontSize, FontFamily } from '../assets/stylesheets/base_style';
 import Images from '../utils/images';
 import Notification from '../models/Notification';
@@ -20,8 +20,10 @@ const CustomHeaderHome = withTranslation()((props) => {
     setHasUnread(Notification.hasUnread());
   });
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
 
       <View style={styles.headerLeft}>
         <Text style={styles.welcomeText}>{props.t('HomeScreen.WelcomeTo')}</Text>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 3
+    elevation: 3,
   },
   headerLeft: {
     flex: 1,
