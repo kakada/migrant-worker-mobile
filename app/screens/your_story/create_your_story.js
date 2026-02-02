@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, StatusBar, BackHandler } from 'react-native';
-import {HeaderBackButton} from '@react-navigation/elements';
+import { View, StatusBar, BackHandler, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Color } from '../../assets/stylesheets/base_style';
+import { Color, Style } from '../../assets/stylesheets/base_style';
 
 import { withTranslation } from 'react-i18next';
 
@@ -34,9 +34,11 @@ class CreateYourStory extends Component {
     super(props);
 
     props.navigation.setOptions({
-      headerLeft: () => (<HeaderBackButton tintColor={"#fff"} onPress={() => {
-        this.alertRef.current?.setAlertVisibility(true);
-      }}/>),
+      headerLeft: () => (
+        <TouchableOpacity style={{width: 48,}} onPress={() => this.alertRef.current?.setAlertVisibility(true)}>
+          <Icon name='arrow-back' size={24} style={{color: '#fff'}}/>
+        </TouchableOpacity>
+      ),
       headerRight: () => (<HomeButton onPress={() => {
         this.setState({action: 'Home'});
         this.alertRef.current?.setAlertVisibility(true);
