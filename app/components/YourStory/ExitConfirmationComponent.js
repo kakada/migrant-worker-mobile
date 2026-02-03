@@ -1,0 +1,51 @@
+import React, {useEffect} from 'react';
+import { View, Text } from 'react-native';
+import {useDispatch} from 'react-redux';
+
+import {setCurrentPlayingAudio} from '../../actions/currentPlayingAudioAction';
+import { Color, FontFamily, FontSize } from '../../assets/stylesheets/base_style';
+import OutlineInfoIcon from '../OutlineInfoIcon';
+import BigButtonComponent from '../shared/BigButtonComponent';
+import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
+
+const ExitConfirmationComponent = React.forwardRef((props, ref) => {
+  const dispatch = useDispatch();
+
+  const exitYourStory = () => {
+    props.modalRef.current?.dismiss();
+    dispatch(setCurrentPlayingAudio(null));
+    props.exitScreen();
+  }
+
+  const renderAudioPlayer = () => {
+    return <CustomAudioPlayerComponent
+              itemUuid='alert-dialog'
+              audio='exit_game.mp3'
+              buttonBackgroundColor={Color.red}
+              isOutline={true}
+            />
+  }
+
+  return (
+    <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: 32}}>
+      <OutlineInfoIcon
+        customIconContainerStyles={{width: 96, height: 96, borderRadius: 96, marginRight: 0}}
+        customIconStyles={{width: 64, height: 64}}
+      />
+      <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 16}}>
+        <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, marginRight: 16, marginTop: 6}}>ចាកចេញពីសាច់រឿង</Text>
+        {renderAudioPlayer()}
+      </View>
+      <Text style={{fontFamily: FontFamily.body, marginTop: 16, marginBottom: 32}}>តើអ្នកប្រាកដថាចង់ចាកចេញពីហ្គេមនេះដែរឬទេ?</Text>
+
+      <View style={{width: '100%', paddingHorizontal: 16}}>
+        <BigButtonComponent
+          label="បាទ/ចាស"
+          onPress={() => exitYourStory()}
+        />
+      </View>
+    </View>
+  );
+})
+
+export default ExitConfirmationComponent;
