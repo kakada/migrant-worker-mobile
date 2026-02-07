@@ -6,9 +6,28 @@ import { Color } from '../assets/stylesheets/base_style';
 import { FontFamily, FontSize } from '../assets/stylesheets/base_style';
 import { Style } from '../assets/stylesheets/base_style';
 import BigButtonComponent from '../components/shared/BigButtonComponent';
+import DeleteReason from '../models/DeleteReason';
 
 const DeleteAccountScreen = () => {
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [selectedReason, setSelectedReason] = useState(null);
+  const deleteReasons = DeleteReason.getAll().map(item => {
+    return { label: item['name_km'], value: item['id'] }
+  });
+
+  const customBottomSheetTitle = () => {
+    return (
+      <React.Fragment>
+        <Text style={{fontSize: 18, marginBottom: 20, paddingHorizontal: 16, fontFamily: FontFamily.title, color: 'black'}}>
+          ជ្រើសរើសមូលហេតុ
+        </Text>
+        <View style={{position: 'relative'}}>
+          <View style={{flex: 1, borderColor: '#D3D3D3', borderWidth: 2, borderStyle: 'dashed', borderRadius: 1}}/>
+          <View style={{position: 'absolute', width: '100%', backgroundColor: 'white', height: 4, bottom: -1.2}}/>
+        </View>
+      </React.Fragment>
+    )
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -38,16 +57,29 @@ const DeleteAccountScreen = () => {
           មូលហេតុសម្រាប់លុប / Reason for deletion *
         </Text>
         <BottomSheetPicker
+          bottomSheetTitle="ជ្រើសរើសមូលហេតុ"
           placeholder="ជ្រើសរើសមូលហេតុ"
           placeholderStyle={styles.label}
           primaryColor={Color.primary}
           pickerStyle={[Style.boxShadow, { height: 64, paddingLeft: 16, paddingRight: 6 }]}
+          itemTextStyle={styles.label}
+          items={deleteReasons}
+          bottomSheetTitleStyle={{fontFamily: FontFamily.title}}
+          titleFontFamily={FontFamily.title}
+          customBottomSheetTitle={customBottomSheetTitle()}
+          hideListItemAudio={true}
+          selectedItem={selectedReason}
+          onSelectItem={(item) => setSelectedReason(item)}
         />
 
         <BigButtonComponent
           label="លុបគណនីរបស់ខ្ញុំ / Delete My Account"
           buttonStyle={{marginTop: 32, backgroundColor: Color.red}}
-          onPress={() => {}}
+          disabled={!userId || !selectedReason}
+          onPress={() => {
+            console.log('==== user ID = ', userId);
+            console.log('==== reason = ', selectedReason);
+          }}
         />
 
         <Text style={[styles.noteLabel, {marginTop: 18}]}>

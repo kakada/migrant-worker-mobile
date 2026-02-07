@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 // import * as Sentry from '@sentry/react-native';
 import TranslationHelper from './app/translations';
 import RegisteredTokenService from './app/services/registered_token_service';
+import DeleteReasonService from './app/services/delete_reason_service';
 import Video from './app/models/Video';
 import Visit from './app/models/Visit';
 
@@ -55,6 +56,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    new DeleteReasonService().fetch();
+
     // SplashScreen.hide();
     IndexWorker.init();
     // new RegisteredTokenService().handleSyncingToken();
