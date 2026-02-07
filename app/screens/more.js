@@ -30,6 +30,14 @@ class More extends Component {
           <OtherList />
 
           <ListItem
+            title="លុបគណនីរបស់ខ្ញុំ"
+            // avata={}
+            onPress={() => {
+              this.props.navigation.navigate('DeleteAccountScreen')
+            }}
+          />
+
+          <ListItem
             title={"ចាកចេញ"}
             avata={Images.logout}
             onPress={ () => this.props.setCurrentUser(null) }
