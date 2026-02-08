@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Touchable, TouchableOpacity } from 'react-native';
 import {BottomSheetPicker} from 'react-native-bottom-sheet-picker';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Color } from '../assets/stylesheets/base_style';
 import { FontFamily, FontSize } from '../assets/stylesheets/base_style';
 import { Style } from '../assets/stylesheets/base_style';
 import BigButtonComponent from '../components/shared/BigButtonComponent';
+import BottomSheetModalComponent from '../components/shared/BottomSheetModalComponent';
+import BottomSheetModalContentComponent from '../components/shared/BottomSheetModalContentComponent';
 import DeleteReason from '../models/DeleteReason';
 import UserService from '../services/user_service';
 
 const DeleteAccountScreen = () => {
   const [userId, setUserId] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
+  const modalRef = React.createRef();
   const deleteReasons = DeleteReason.getAll().map(item => {
     return { label: item['name_km'], value: item['id'] }
   });
@@ -30,21 +34,45 @@ const DeleteAccountScreen = () => {
     )
   }
 
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{flexGrow: 1, padding: 16}}>
-        <Text style={styles.label}>
-          សូមបញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក និងជ្រើសរើសមូលហេតុសម្រាប់លុបគណនីរបស់អ្នក។
-        </Text>
-        <Text style={[styles.label, { marginTop: 8 }]}>
-          Please enter your user ID and select a reason for deleting your account.
-        </Text>
+  const showUserIdInstruction = () => {
+    modalRef.current?.setContent(
+      <BottomSheetModalContentComponent
+        title='កន្លែងដែលបង្ហាញ ID អ្នកប្រើប្រាស់'
+        containerStyle={{height: 'auto', paddingBottom: 64}}
+      >
+        <React.Fragment>
+          <Text style={{lineHeight: 30, color: 'black', fontSize: FontSize.body, fontFamily: FontFamily.body, marginVertical: 10}}>
+            អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប
+          </Text>
 
-        <View style={{width: '100%', height: 2, marginVertical: 22, backgroundColor: Color.border, borderRadius: 4}}/>
+          <BigButtonComponent
+            label="យល់ព្រម"
+            buttonStyle={{marginTop: 16}}
+            onPress={() => modalRef.current?.dismiss()}
+          />
+        </React.Fragment>
+      </BottomSheetModalContentComponent>
+    );
+    modalRef.current?.present();
+  }
 
-        <Text style={styles.label}>
-          លេខសម្គាល់អ្នកប្រើប្រាស់ / User ID *
-        </Text>
+  const tooltipButton = () => {
+    return (
+      <TouchableOpacity onPress={() => showUserIdInstruction()} style={{width: 48, justifyContent: 'center', alignItems: 'center'}}>
+        <Icon name="alert-circle-outline" size={24} color={Color.primary}/>
+      </TouchableOpacity>
+    )
+  }
+
+  const deletionForm = () => {
+    return (
+      <React.Fragment>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.label}>
+            លេខសម្គាល់អ្នកប្រើប្រាស់ / User ID *
+          </Text>
+          {tooltipButton()}
+        </View>
         <View style={[styles.buttonWrapper, Style.boxShadow, {height: 64}]}>
           <TextInput
             placeholder='បញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក'
@@ -84,6 +112,23 @@ const DeleteAccountScreen = () => {
             });
           }}
         />
+      </React.Fragment>
+    )
+  }
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{flexGrow: 1, padding: 16}}>
+        <Text style={styles.label}>
+          សូមបញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក និងជ្រើសរើសមូលហេតុសម្រាប់លុបគណនីរបស់អ្នក។
+        </Text>
+        <Text style={[styles.label, { marginTop: 8 }]}>
+          Please enter your user ID and select a reason for deleting your account.
+        </Text>
+
+        <View style={{width: '100%', height: 2, marginVertical: 22, backgroundColor: Color.border, borderRadius: 4}}/>
+
+        { deletionForm() }
 
         <Text style={[styles.noteLabel, {marginTop: 18}]}>
           *** គណនីរបស់អ្នកនឹងត្រូវបានកំណត់ពេលសម្រាប់លុប។ ទិន្នន័យនឹងត្រូវបានលុបចោលជាអចិន្ត្រៃយ៍បន្ទាប់ពី 30 ថ្ងៃ។
@@ -91,6 +136,8 @@ const DeleteAccountScreen = () => {
         <Text style={styles.noteLabel}>
           Your account will be scheduled for deletion. The data will be permanently removed after 30 days.
         </Text>
+
+        <BottomSheetModalComponent ref={modalRef} />
       </View>
     </TouchableWithoutFeedback>
   )
