@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, Touchable, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import {BottomSheetPicker} from 'react-native-bottom-sheet-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -41,9 +41,18 @@ const DeleteAccountScreen = () => {
         containerStyle={{height: 'auto', paddingBottom: 64}}
       >
         <React.Fragment>
-          <Text style={{lineHeight: 30, color: 'black', fontSize: FontSize.body, fontFamily: FontFamily.body, marginVertical: 10}}>
-            អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប
+          <Text style={styles.userIdInfoLabel}>
+            អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប:
           </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.userIdInfoLabel}>
+              បន្ថែម
+            </Text>
+            <Icon name="arrow-forward" size={20} style={{marginHorizontal: 8}} />
+            <Text style={styles.userIdInfoLabel}>
+              ប្រវត្តិរូប
+            </Text>
+          </View>
 
           <BigButtonComponent
             label="យល់ព្រម"
@@ -168,6 +177,11 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.body,
     fontSize: FontSize.small,
     color: Color.gray,
+  },
+  userIdInfoLabel: {
+    fontSize: FontSize.body,
+    fontFamily: FontFamily.body,
+    marginVertical: 10
   }
 });
 
