@@ -21,9 +21,8 @@ class WebService {
 
   delete(endpoint, data) {
     return RNFetchBlob.fetch('DELETE', endpoint, {
-      Authorization: authorizationToken,
+      'Authorization': authorizationToken,
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
     }, data);
   }
 

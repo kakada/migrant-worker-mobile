@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 import { Color, FontFamily, Style } from '../assets/stylesheets/base_style';
 import Images from '../utils/images';
@@ -31,7 +32,7 @@ class More extends Component {
 
           <ListItem
             title="លុបគណនីរបស់ខ្ញុំ"
-            // avata={}
+            customIcon={<Icon name="user-x" size={20} color='white' />}
             onPress={() => {
               this.props.navigation.navigate('DeleteAccountScreen')
             }}

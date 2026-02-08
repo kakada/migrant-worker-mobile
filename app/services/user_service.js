@@ -25,11 +25,8 @@ export default class UserService extends WebService {
     NetInfo.fetch().then(state => {
       if (!state.isConnected) return;
 
-      const data = {
-        delete_reason_id: deleteReasonId
-      };
-
-      this.delete(endpointHelper.detailEndpoint('users', userId), JSON.stringify(data))
+      let url = endpointHelper.detailEndpoint('users', userId);
+      this.delete(url, JSON.stringify({ delete_reason_id: deleteReasonId }))
         .then(res => {
           let body = res.json();
           console.log('==== delete user response = ', body);
