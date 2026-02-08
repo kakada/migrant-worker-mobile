@@ -21,6 +21,25 @@ export default class UserService extends WebService {
     });
   }
 
+  destroy({userId, deleteReasonId}) {
+    NetInfo.fetch().then(state => {
+      if (!state.isConnected) return;
+
+      const data = {
+        delete_reason_id: deleteReasonId
+      };
+
+      this.delete(endpointHelper.detailEndpoint('users', userId), JSON.stringify(data))
+        .then(res => {
+          let body = res.json();
+          console.log('==== delete user response = ', body);
+        })
+        .catch(e => {
+          console.log('==== delete user error = ', e);
+        })
+    });
+  }
+
   _buildData(user) {
     let attributes = {
       uuid: user.uuid,

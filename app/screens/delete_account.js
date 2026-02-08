@@ -7,6 +7,7 @@ import { FontFamily, FontSize } from '../assets/stylesheets/base_style';
 import { Style } from '../assets/stylesheets/base_style';
 import BigButtonComponent from '../components/shared/BigButtonComponent';
 import DeleteReason from '../models/DeleteReason';
+import UserService from '../services/user_service';
 
 const DeleteAccountScreen = () => {
   const [userId, setUserId] = useState(null);
@@ -77,8 +78,10 @@ const DeleteAccountScreen = () => {
           buttonStyle={{marginTop: 32, backgroundColor: Color.red}}
           disabled={!userId || !selectedReason}
           onPress={() => {
-            console.log('==== user ID = ', userId);
-            console.log('==== reason = ', selectedReason);
+            new UserService().destroy({
+              userId: userId,
+              deleteReasonId: selectedReason
+            });
           }}
         />
 
