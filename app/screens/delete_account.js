@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import {BottomSheetPicker} from 'react-native-bottom-sheet-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Snackbar } from 'react-native-paper';
 
 import { Color } from '../assets/stylesheets/base_style';
 import { FontFamily, FontSize } from '../assets/stylesheets/base_style';
@@ -15,6 +16,7 @@ import UserService from '../services/user_service';
 const DeleteAccountScreen = (props) => {
   const [userId, setUserId] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   const modalRef = React.createRef();
   const deleteReasons = DeleteReason.getAll().map(item => {
     return { label: item['name_km'], value: item['id'] }
@@ -120,7 +122,8 @@ const DeleteAccountScreen = (props) => {
               deleteReasonId: selectedReason,
               onSuccess: () => {
                 props.navigation.navigate('DeleteAccountSuccessScreen');
-              }
+              },
+              onFailure: () => { setSnackbarVisible(true) }
             });
           }}
         />
@@ -150,6 +153,17 @@ const DeleteAccountScreen = (props) => {
         </Text>
 
         <BottomSheetModalComponent ref={modalRef} />
+
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          duration={3000}
+          style={{backgroundColor: Color.red, width: '100%', marginLeft: 16}}
+        >
+          <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: '#FFFFFF' }}>
+            បរាជ័យក្នុងការលុបគណនី
+          </Text>
+        </Snackbar>
       </View>
     </TouchableWithoutFeedback>
   )
