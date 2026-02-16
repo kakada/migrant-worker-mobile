@@ -12,7 +12,7 @@ import BottomSheetModalContentComponent from '../components/shared/BottomSheetMo
 import DeleteReason from '../models/DeleteReason';
 import UserService from '../services/user_service';
 
-const DeleteAccountScreen = () => {
+const DeleteAccountScreen = (props) => {
   const [userId, setUserId] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
   const modalRef = React.createRef();
@@ -117,7 +117,10 @@ const DeleteAccountScreen = () => {
           onPress={() => {
             new UserService().destroy({
               userId: userId,
-              deleteReasonId: selectedReason
+              deleteReasonId: selectedReason,
+              onSuccess: () => {
+                props.navigation.navigate('DeleteAccountSuccessScreen');
+              }
             });
           }}
         />

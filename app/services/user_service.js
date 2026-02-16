@@ -21,7 +21,7 @@ export default class UserService extends WebService {
     });
   }
 
-  destroy({userId, deleteReasonId}) {
+  destroy({userId, deleteReasonId, onSuccess}) {
     NetInfo.fetch().then(state => {
       if (!state.isConnected) return;
 
@@ -30,6 +30,7 @@ export default class UserService extends WebService {
         .then(res => {
           let body = res.json();
           console.log('==== delete user response = ', body);
+          onSuccess();
         })
         .catch(e => {
           console.log('==== delete user error = ', e);
