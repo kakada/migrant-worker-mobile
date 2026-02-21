@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import {BottomSheetPicker} from 'react-native-bottom-sheet-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Snackbar } from 'react-native-paper';
 
 import { Color } from '../assets/stylesheets/base_style';
@@ -36,6 +38,17 @@ const DeleteAccountScreen = (props) => {
     )
   }
 
+  const screenStep = ({ label, icon }) => {
+    return (
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {icon}
+        <Text style={styles.userIdInfoLabel}>
+          {label}
+        </Text>
+      </View>
+    )
+  }
+
   const showUserIdInstruction = () => {
     modalRef.current?.setContent(
       <BottomSheetModalContentComponent
@@ -46,14 +59,27 @@ const DeleteAccountScreen = (props) => {
           <Text style={styles.userIdInfoLabel}>
             អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប:
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.userIdInfoLabel}>
-              បន្ថែម
-            </Text>
-            <Icon name="arrow-forward" size={20} style={{marginHorizontal: 8}} />
-            <Text style={styles.userIdInfoLabel}>
-              ប្រវត្តិរូប
-            </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap'}}>
+            {
+              screenStep({
+                label: 'បន្ថែម',
+                icon: <FeatherIcon name="more-horizontal" size={24} />
+              })
+            }
+            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 8}} />
+            {
+              screenStep({
+                label: 'កែសម្រួល',
+                icon: <Icon name="person-circle-outline" size={24} />
+              })
+            }
+            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 8}} />
+            {
+              screenStep({
+                label: 'ID របស់អ្នក',
+                icon: <MaterialIcon name="badge" size={24} />
+              })
+            }
           </View>
 
           <BigButtonComponent
@@ -198,7 +224,8 @@ const styles = StyleSheet.create({
   userIdInfoLabel: {
     fontSize: FontSize.body,
     fontFamily: FontFamily.body,
-    marginVertical: 10
+    marginVertical: 10,
+    marginLeft: 4
   }
 });
 
