@@ -40,7 +40,7 @@ const DeleteAccountScreen = (props) => {
 
   const screenStep = ({ label, icon }) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: Color.divideLineColor, borderRadius: 12, paddingHorizontal: 6}}>
         {icon}
         <Text style={styles.userIdInfoLabel}>
           {label}
@@ -53,27 +53,26 @@ const DeleteAccountScreen = (props) => {
     modalRef.current?.setContent(
       <BottomSheetModalContentComponent
         title='កន្លែងដែលបង្ហាញ ID អ្នកប្រើប្រាស់'
-        containerStyle={{height: 'auto', paddingBottom: 64}}
       >
         <React.Fragment>
           <Text style={styles.userIdInfoLabel}>
             អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប:
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', marginBottom: 16}}>
             {
               screenStep({
                 label: 'បន្ថែម',
                 icon: <FeatherIcon name="more-horizontal" size={24} />
               })
             }
-            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 8}} />
+            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 4}} />
             {
               screenStep({
                 label: 'កែសម្រួល',
                 icon: <Icon name="person-circle-outline" size={24} />
               })
             }
-            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 8}} />
+            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 4}} />
             {
               screenStep({
                 label: 'ID របស់អ្នក',

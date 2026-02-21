@@ -1,13 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import DashedLineComponent from './DashedLineComponent';
-import { Color, FontFamily } from '../../assets/stylesheets/base_style';
-import { defaultContentHeight } from '../../constants/modal_constant';
+import { FontFamily } from '../../assets/stylesheets/base_style';
 import {isLowPixelDensityDevice} from '../../utils/responsive_util';
 
 const BottomSheetModalMainComponent = (props) => {
+  const insets = useSafeAreaInsets();
   const headerHeight = !!props.audioButton ? isLowPixelDensityDevice() ? 52 : 56 : isLowPixelDensityDevice() ? 48 : 50;
 
   const renderHeader = () => {
@@ -23,7 +24,7 @@ const BottomSheetModalMainComponent = (props) => {
   }
 
   return (
-    <View style={[styles.container, props.containerStyle]}>
+    <View style={[{ paddingBottom: insets.bottom + 12 }, props.containerStyle]}>
       <View>
         { props.customTitle ? props.customTitle : renderHeader()}
         <DashedLineComponent/>
@@ -37,9 +38,6 @@ const BottomSheetModalMainComponent = (props) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: defaultContentHeight,
-  },
   scrollViewContainer: {
     flexGrow: 1,
     paddingTop: 10,

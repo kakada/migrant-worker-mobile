@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import {useDispatch} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {setCurrentPlayingAudio} from '../../actions/currentPlayingAudioAction';
 import { Color, FontFamily, FontSize } from '../../assets/stylesheets/base_style';
@@ -10,6 +11,7 @@ import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
 
 const ExitConfirmationComponent = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const exitYourStory = () => {
     props.modalRef.current?.dismiss();
@@ -27,7 +29,7 @@ const ExitConfirmationComponent = React.forwardRef((props, ref) => {
   }
 
   return (
-    <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: 32}}>
+    <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: insets.bottom + 12}}>
       <OutlineInfoIcon
         customIconContainerStyles={{width: 96, height: 96, borderRadius: 96, marginRight: 0}}
         customIconStyles={{width: 64, height: 64}}

@@ -6,11 +6,10 @@ import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Images from '../../utils/images';
 
-import { Color, Style } from '../../assets/stylesheets/base_style';
+import { Style } from '../../assets/stylesheets/base_style';
 import WelcomeMessage from '../welcome_message';
 import ButtonNav from '../button_nav';
 import { HDPIRatio } from '../../constants/screen_size_constant';
-// import BottomSheetModalComponent from '../shared/BottomSheetModalComponent';
 import RegistrationConfirmationComponent from '../shared/RegistrationConfirmationComponent';
 
 const contentFontSize = PixelRatio.get() <= HDPIRatio ? 11 : 14;
