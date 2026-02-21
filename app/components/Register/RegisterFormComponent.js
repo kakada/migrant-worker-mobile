@@ -1,16 +1,15 @@
 import React, { useEffect, useReducer } from 'react';
-import { View, ScrollView, ToastAndroid, TouchableOpacity } from 'react-native';
+import { View, ScrollView, ToastAndroid } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useTranslation } from "react-i18next";
 import {useDispatch, useSelector} from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Clipboard from '@react-native-clipboard/clipboard';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Color } from '../../assets/stylesheets/base_style';
 import BigButtonComponent from '../shared/BigButtonComponent';
 import RegisterTextInputComponent from './RegisterTextInputComponent';
 import RegisterVoiceRecorderComponent from './RegisterVoiceRecorderComponent';
+import RegisterUserIdComponent from './RegisterUserIdComponent';
 import RegistrationConfirmationComponent from '../shared/RegistrationConfirmationComponent';
 import SectionSeparatorComponent from '../shared/SectionSeparatorComponent';
 import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
@@ -59,22 +58,6 @@ const RegisterFormComponent = (props) => {
 
     obj[stateName] = value;
     setState(obj);
-  }
-
-  const renderUserId = () => {
-    return (
-      <TouchableOpacity
-        onPress={() => { Clipboard.setString(state.uuid); }}
-        style={{marginTop: -10, marginBottom: 10, flexDirection: 'row', alignItems: 'center'}}
-      >
-        <Text variant="regular" style={{fontSize: 14, color: Color.gray, marginRight: 12}}>
-          ID: {state.uuid}
-        </Text>
-
-      <Icon name="copy-outline" size={20} color={Color.primary} />
-
-      </TouchableOpacity>
-    )
   }
 
   const renderTextInput = (item) => {
@@ -188,7 +171,8 @@ const RegisterFormComponent = (props) => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        { renderUserId() }
+        {/* { renderUserId() } */}
+        <RegisterUserIdComponent uuid={state.uuid} />
         {renderTextInput(list[0])}
         {renderSexOption()}
         {renderTextInput(list[1])}
