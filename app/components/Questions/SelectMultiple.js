@@ -12,8 +12,9 @@ import Answer from '../../models/Answer';
 import Option from '../../models/Option';
 import NextButton from '../YourStory/NextButton';
 import QuestionName from './questionName';
-import AlertMessage from '../AlertMessage';
 import CheckboxComponent from '../shared/CheckboxComponent';
+import BottomSheetModalComponent from '../shared/BottomSheetModalComponent';
+import YourStoryAlertMessageComponent from '../YourStory/YourStoryAlertMessageComponent';
 
 import { connect } from 'react-redux';
 import { setCurrentQuestionIndex } from '../../actions/currentQuestionIndexAction';
@@ -27,6 +28,7 @@ class QuestionsMultiple extends Component {
   constructor(props) {
     super(props)
 
+    this.modalRef = React.createRef();
     this.state = {
       options: Option.byQuestion(props.question.id),
       answers: [],
@@ -89,7 +91,9 @@ class QuestionsMultiple extends Component {
     this.alertOptions = this.answerOptions.filter(o => !!o.alert_message);
 
     if (!!this.alertOptions.length) {
-      return this.setState({showAlert: true, alertOption: this.alertOptions[0]});
+      this.setState({alertOption: this.alertOptions[0]});
+      this._showBottomSheet(this.alertOptions[0]);
+      return;
     }
 
     this._handleNext();
@@ -111,12 +115,26 @@ class QuestionsMultiple extends Component {
     this.answerOptions = [];
   }
 
+  _showBottomSheet(alertOption) {
+    this.modalRef.current?.setContent(
+      <YourStoryAlertMessageComponent
+        warning={alertOption.warning}
+        message={alertOption.alert_message}
+        audio={alertOption.alert_audio}
+        onPress={() => this._handleHideMessage()}
+      />
+    );
+    this.modalRef.current?.present();
+  }
+
   _handleHideMessage() {
-    this.setState({showAlert: false});
+    this.modalRef.current?.dismiss();
     this.alertOptionIndex++;
 
     if (!!this.alertOptions[this.alertOptionIndex]) {
-      return this.setState({alertOption: this.alertOptions[this.alertOptionIndex], showAlert: true});
+      this.setState({alertOption: this.alertOptions[this.alertOptionIndex]});
+      this._showBottomSheet(this.alertOptions[this.alertOptionIndex]);
+      return;
     }
 
     // not sure about should I save the answer or not in case (recursive)
@@ -146,14 +164,7 @@ class QuestionsMultiple extends Component {
           <NextButton disabled={!this.state.answers.length} onPress={() => this._onPressNext() } />
         </View>
 
-        <AlertMessage
-          show={this.state.showAlert}
-          warning={this.state.alertOption.warning}
-          message={this.state.alertOption.alert_message}
-          onPressAction={() => this._handleHideMessage()}
-          audio={this.state.alertOption.alert_audio}
-        />
-
+        <BottomSheetModalComponent ref={this.modalRef} />
       </>
     );
   }

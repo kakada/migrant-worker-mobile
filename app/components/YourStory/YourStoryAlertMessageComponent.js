@@ -1,40 +1,70 @@
-import React, {useState} from 'react';
+import React, { useEffect } from 'react';
+import { View, Text } from 'react-native';
 import {useDispatch} from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import AlertMessage from '../AlertMessage';
 import {setCurrentPlayingAudio} from '../../actions/currentPlayingAudioAction';
+import { Color, FontFamily, FontSize } from '../../assets/stylesheets/base_style';
+import OutlineInfoIcon from '../OutlineInfoIcon';
+import BigButtonComponent from '../shared/BigButtonComponent';
+import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
+import AppIcon from '../AppIcon';
 
-const {useImperativeHandle} = React;
-
-const YourStoryFormAlertMessageComponent = React.forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(false);
+const YourStoryAlertMessageComponent = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
-  useImperativeHandle(ref, () => ({
-    setAlertVisibility
-  }))
+  useEffect(() => {
+    return () => {
+      dispatch(setCurrentPlayingAudio(null));
+    };
+  }, [dispatch]);
 
-  const setAlertVisibility = (status) => {
-    setVisible(status)
+  const renderIcon = () => {
+    return props.warning
+      ? <AppIcon iconType='warning' customStyles={{width: 96, height: 96}} />
+      : <OutlineInfoIcon
+          customIconContainerStyles={{width: 96, height: 96, borderRadius: 96, marginRight: 0}}
+          customIconStyles={{width: 64, height: 64}}
+        />;
   }
 
-  const exitYourStory = () => {
-    setVisible(false);
+  const renderAudioPlayer = () => {
+    return <CustomAudioPlayerComponent
+              itemUuid='alert-dialog'
+              audio={props.audio}
+              buttonBackgroundColor={Color.red}
+              isOutline={true}
+            />
+  }
+
+  const onPressAction = () => {
     dispatch(setCurrentPlayingAudio(null));
-    navigation.goBack();
+    props.onPress();
   }
 
-  return <AlertMessage
-            show={visible}
-            warning={false}
-            title={"ចាកចេញពីសាច់រឿង"}
-            message={"តើអ្នកប្រាកដថាចង់ចាកចេញពីហ្គេមនេះដែរឬទេ?"}
-            onPressAction={() => exitYourStory()}
-            onPressCancel={() => setVisible(false)}
-            audio={'exit_game.mp3'}
-          />
+  return (
+    <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: insets.bottom + 12}}>
+      { renderIcon() }
+      <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 16}}>
+        <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, marginRight: 16, marginTop: 6}}>
+          { props.title || 'សូមចំណាំ' }
+        </Text>
+        {renderAudioPlayer()}
+      </View>
+      <Text style={{fontFamily: FontFamily.body, marginTop: 16, marginBottom: 32, paddingHorizontal: 16}}>
+        { props.message }
+      </Text>
+
+      <View style={{width: '100%', paddingHorizontal: 16}}>
+        <BigButtonComponent
+          label="បាទ/ចាស"
+          onPress={() => onPressAction()}
+        />
+      </View>
+    </View>
+  );
+
 })
 
-export default YourStoryFormAlertMessageComponent;
+export default YourStoryAlertMessageComponent;
