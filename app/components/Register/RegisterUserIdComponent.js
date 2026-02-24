@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -14,7 +14,7 @@ const RegisterUserIdComponent = (props) => {
     <View style={{ marginBottom: 16 }}>
       <View style={[styles.buttonWrapper, Style.boxShadow, {height: 64}]}>
         <View style={[styles.textInputWrapper, props.textContainerStyle]}>
-          <Icon name="badge" size={24} style={styles.inputIcon} />
+          <Icon name="id-card" size={20} style={styles.inputIcon} />
           <TextInput
             style={[styles.textInput, { marginLeft: 6, color: Color.gray }]}
             onChangeText={value => props.onChange(value)}
