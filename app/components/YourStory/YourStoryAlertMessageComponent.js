@@ -30,12 +30,14 @@ const YourStoryAlertMessageComponent = React.forwardRef((props, ref) => {
   }
 
   const renderAudioPlayer = () => {
-    return <CustomAudioPlayerComponent
-              itemUuid='alert-dialog'
-              audio={props.audio}
-              buttonBackgroundColor={Color.red}
-              isOutline={true}
-            />
+    return <View style={{position: 'absolute', zIndex: 10, right: 16}}>
+      <CustomAudioPlayerComponent
+        itemUuid='alert-dialog'
+        audio={props.audio}
+        buttonBackgroundColor={Color.red}
+        isOutline={true}
+      />
+    </View>
   }
 
   const onPressAction = () => {
@@ -46,10 +48,12 @@ const YourStoryAlertMessageComponent = React.forwardRef((props, ref) => {
   return (
     <View style={{alignItems: 'center', paddingTop: 16, paddingBottom: insets.bottom + 12}}>
       { renderIcon() }
-      <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 16}}>
-        <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, marginRight: 16, marginTop: 6}}>
-          { props.title || 'សូមចំណាំ' }
-        </Text>
+      <View style={{flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 16, position: 'relative'}}>
+        <View style={{width: '80%', alignItems: 'center'}}>
+          <Text style={{fontFamily: FontFamily.title, fontSize: FontSize.body, marginRight: 16, marginTop: 6}}>
+            { props.title || 'សូមចំណាំ' }
+          </Text>
+        </View>
         {renderAudioPlayer()}
       </View>
       <Text style={{fontFamily: FontFamily.body, marginTop: 16, marginBottom: 32, paddingHorizontal: 16}}>
