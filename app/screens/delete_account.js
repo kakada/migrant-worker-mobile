@@ -105,7 +105,7 @@ const DeleteAccountScreen = (props) => {
       <React.Fragment>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.label}>
-            លេខសម្គាល់អ្នកប្រើប្រាស់ / User ID *
+            លេខសម្គាល់អ្នកប្រើប្រាស់ / User ID <Text style={{color: Color.red, fontSize: 18}}>*</Text>
           </Text>
           {tooltipButton()}
         </View>
@@ -119,7 +119,7 @@ const DeleteAccountScreen = (props) => {
         </View>
 
         <Text style={[styles.label, { marginTop: 26 }]}>
-          មូលហេតុសម្រាប់លុប / Reason for deletion *
+          មូលហេតុសម្រាប់លុប / Reason for deletion <Text style={{color: Color.red, fontSize: 18}}>*</Text>
         </Text>
         <BottomSheetPicker
           bottomSheetTitle="ជ្រើសរើសមូលហេតុ"
