@@ -19,6 +19,7 @@ const DeleteAccountScreen = (props) => {
   const [userId, setUserId] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [isInvalidId, setIsInvalidId] = useState(false);
   const modalRef = React.createRef();
   const deleteReasons = DeleteReason.getAll().map(item => {
     return { label: item['name_km'], value: item['id'] }
@@ -89,7 +90,7 @@ const DeleteAccountScreen = (props) => {
           </Text>
           {tooltipButton()}
         </View>
-        <View style={[styles.buttonWrapper, Style.boxShadow, {height: 64}]}>
+        <View style={[styles.buttonWrapper, Style.boxShadow, {height: 64}, isInvalidId ? {borderWidth: 2, borderColor: Color.red} : {}]}>
           <TextInput
             placeholder='បញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក'
             value={userId}
@@ -128,7 +129,11 @@ const DeleteAccountScreen = (props) => {
               onSuccess: () => {
                 props.navigation.navigate('DeleteAccountSuccessScreen');
               },
-              onFailure: (status) => { setSnackbarVisible(true) }
+              onFailure: (status) => {
+                // Todo: Show the error message based on the error status
+                setIsInvalidId(true);
+                setSnackbarVisible(true)
+              }
             });
           }}
         />
@@ -165,8 +170,8 @@ const DeleteAccountScreen = (props) => {
           duration={3000}
           style={{backgroundColor: Color.red, width: '100%', marginLeft: 16}}
         >
-          <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: '#FFFFFF' }}>
-            បរាជ័យក្នុងការលុបគណនី
+          <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: Color.white }}>
+            លេខសម្គាល់/ID មិនត្រឹមត្រូវ សូមពិនិត្យឡើងវិញ
           </Text>
         </Snackbar>
       </View>
