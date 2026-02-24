@@ -38,17 +38,6 @@ const DeleteAccountScreen = (props) => {
     )
   }
 
-  const screenStep = ({ label, icon }) => {
-    return (
-      <View style={{flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: Color.divideLineColor, borderRadius: 12, paddingHorizontal: 6}}>
-        {icon}
-        <Text style={styles.userIdInfoLabel}>
-          {label}
-        </Text>
-      </View>
-    )
-  }
-
   const showUserIdInstruction = () => {
     modalRef.current?.setContent(
       <BottomSheetModalContentComponent
@@ -58,29 +47,20 @@ const DeleteAccountScreen = (props) => {
           <Text style={styles.userIdInfoLabel}>
             អ្នកអាចស្វែងរក ID របស់អ្នកប្រើប្រាស់នៅផ្ទាំងប្រវត្តិរូប:
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', marginBottom: 16}}>
-            {
-              screenStep({
-                label: 'បន្ថែម',
-                icon: <FeatherIcon name="more-horizontal" size={24} />
-              })
-            }
-            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 4}} />
-            {
-              screenStep({
-                label: 'កែសម្រួល',
-                icon: <Icon name="person-circle-outline" size={24} />
-              })
-            }
-            <Icon name="arrow-forward" size={20} color={Color.gray} style={{marginHorizontal: 4}} />
-            {
-              screenStep({
-                label: 'ID របស់អ្នក',
-                icon: <MaterialIcon name="badge" size={24} />
-              })
-            }
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.userIdInfoLabel}>1. ចូលទៅកាន់</Text>
+            <FeatherIcon name="more-horizontal" size={24} style={{marginLeft: 8}} />
+            <Text style={styles.userIdInfoLabel}>បន្ថែម</Text>
           </View>
 
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.userIdInfoLabel}>2. ចូលទៅកាន់</Text>
+            <Icon name="person-circle-outline" size={24} style={{marginLeft: 8}} />
+            <Text style={styles.userIdInfoLabel}>បន្ថែម</Text>
+          </View>
+
+          <Text style={styles.userIdInfoLabel}>3. ថតចម្លង លេខសម្គាល់/ID</Text>
           <BigButtonComponent
             label="យល់ព្រម"
             buttonStyle={{marginTop: 16}}
