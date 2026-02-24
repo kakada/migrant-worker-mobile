@@ -19,11 +19,11 @@ class WebService {
     return this._request('PUT', endpoint, data, contentType);
   }
 
-  delete(endpoint, data) {
+  delete(endpoint) {
     return RNFetchBlob.fetch('DELETE', endpoint, {
       'Authorization': authorizationToken,
       'Content-Type': 'application/json',
-    }, data);
+    });
   }
 
   // private method

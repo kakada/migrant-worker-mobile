@@ -148,7 +148,7 @@ const DeleteAccountScreen = (props) => {
               onSuccess: () => {
                 props.navigation.navigate('DeleteAccountSuccessScreen');
               },
-              onFailure: () => { setSnackbarVisible(true) }
+              onFailure: (status) => { setSnackbarVisible(true) }
             });
           }}
         />

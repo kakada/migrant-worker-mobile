@@ -4,6 +4,7 @@ import RNFetchBlob from 'react-native-blob-util'
 import Sidekiq from '../models/Sidekiq';
 import User from '../models/User';
 import endpointHelper from '../helpers/endpoint_helper';
+import { environment } from '../config/environment';
 
 export default class UserService extends WebService {
   upload(uuid) {
@@ -25,12 +26,17 @@ export default class UserService extends WebService {
     NetInfo.fetch().then(state => {
       if (!state.isConnected) return;
 
-      let url = endpointHelper.detailEndpoint('users', userId);
+      let url = `${environment.apiUrl}/users/${userId}?delete_reason_id=${deleteReasonId}`;
       this.delete(url, JSON.stringify({ delete_reason_id: deleteReasonId }))
         .then(res => {
           let body = res.json();
           console.log('==== delete user response = ', body);
-          onSuccess();
+
+          if (!!body.status && body.status != 200) {
+            onFailure(body.status);
+          }
+          else
+            onSuccess();
         })
         .catch(e => {
           console.log('==== delete user error = ', e);
