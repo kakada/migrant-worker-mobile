@@ -63,7 +63,7 @@
     "realm": "^20.2.0",
     "redux": "^4.1.0",
     "rn-fetch-blob": "0.12.0",
-    "underscore": "^1.13.1",
+    "underscore": "^1.13.8",
     "y18n": "^5.0.8"
   },
   "devDependencies": {
