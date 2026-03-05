@@ -9,7 +9,7 @@ import { Style } from '../../assets/stylesheets/base_style';
 import { Color } from '../../assets/stylesheets/base_style';
 
 const RegisterUserIdComponent = (props) => {
-  const masked = '*'.repeat(props.uuid.length - 20) + props.uuid.slice(-4);
+  const masked = '*'.repeat(Math.max(0, props.uuid.length - 20)) + props.uuid.slice(-4);
   return (
     <View style={{ marginBottom: 16 }}>
       <View style={[styles.buttonWrapper, Style.boxShadow, {height: 64}]}>
@@ -17,7 +17,6 @@ const RegisterUserIdComponent = (props) => {
           <Icon name="id-card" size={20} style={styles.inputIcon} />
           <TextInput
             style={[styles.textInput, { marginLeft: 6, color: Color.gray }]}
-            onChangeText={value => props.onChange(value)}
             value={masked}
             editable={false}
           />

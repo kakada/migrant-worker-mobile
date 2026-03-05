@@ -76,7 +76,7 @@ class App extends React.Component {
           <PaperProvider theme={paperTheme}>
             <GestureHandlerRootView style={{flex: 1}}>
               <BottomSheetModalProvider>
-                <SafeAreaView edges={{top: 'off', bottom: 'maximum'}} style={{flex: 1}}>
+                <SafeAreaView edges={['right', 'bottom', 'left']} style={{flex: 1}}>
                   <AppNavigator/>
                 </SafeAreaView>
               </BottomSheetModalProvider>

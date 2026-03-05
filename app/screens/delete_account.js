@@ -3,8 +3,8 @@ import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard, 
 import {BottomSheetPicker} from 'react-native-bottom-sheet-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Snackbar } from 'react-native-paper';
+import { withTranslation } from 'react-i18next';
 
 import { Color } from '../assets/stylesheets/base_style';
 import { FontFamily, FontSize } from '../assets/stylesheets/base_style';
@@ -15,7 +15,7 @@ import BottomSheetModalContentComponent from '../components/shared/BottomSheetMo
 import DeleteReason from '../models/DeleteReason';
 import UserService from '../services/user_service';
 
-const DeleteAccountScreen = (props) => {
+const DeleteAccountScreen = withTranslation()((props) => {
   const [userId, setUserId] = useState(null);
   const [selectedReason, setSelectedReason] = useState(null);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -130,7 +130,6 @@ const DeleteAccountScreen = (props) => {
                 props.navigation.navigate('DeleteAccountSuccessScreen');
               },
               onFailure: (status) => {
-                // Todo: Show the error message based on the error status
                 setIsInvalidId(true);
                 setSnackbarVisible(true)
               }
@@ -171,13 +170,13 @@ const DeleteAccountScreen = (props) => {
           style={{backgroundColor: Color.red, width: '100%', marginLeft: 16}}
         >
           <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: Color.white }}>
-            លេខសម្គាល់/ID មិនត្រឹមត្រូវ សូមពិនិត្យឡើងវិញ
+            {props.t("DeleteAccount.UserIdIsIncorrect")}
           </Text>
         </Snackbar>
       </View>
     </TouchableWithoutFeedback>
   )
-}
+})
 
 const styles = StyleSheet.create({
   label: {

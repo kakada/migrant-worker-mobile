@@ -27,11 +27,9 @@ export default class UserService extends WebService {
       if (!state.isConnected) return;
 
       let url = `${environment.apiUrl}/users/${userId}?delete_reason_id=${deleteReasonId}`;
-      this.delete(url, JSON.stringify({ delete_reason_id: deleteReasonId }))
+      this.delete(url)
         .then(res => {
           let body = res.json();
-          console.log('==== delete user response = ', body);
-
           if (!!body.status && body.status != 200) {
             onFailure(body.status);
           }
@@ -39,7 +37,6 @@ export default class UserService extends WebService {
             onSuccess();
         })
         .catch(e => {
-          console.log('==== delete user error = ', e);
           onFailure();
         })
     });

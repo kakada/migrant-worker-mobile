@@ -1,10 +1,7 @@
 {
     "translation": {
-        "CountriesListingScreen": {
-            "HeaderTitle": "Choose migrant countries",
-        },
         "AboutScreen": {
-            "HeaderTitle": "About Us",
+            "HeaderTitle": "About Us"
         },
         "RegisterScreen": {
             "HeaderTitle": "Register",
@@ -118,6 +115,9 @@
         },
         "NotificationDetailScreen": {
             "HeaderTitle": "Notification Detail"
+        },
+        "DeleteAccount": {
+            "UserIdIsIncorrect": "Your user ID is incorrect. Please try again"
         }
     }
 }
