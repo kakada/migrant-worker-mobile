@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, ImageBackground, Dimensions, Alert } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Images from '../../utils/images';
 import { backgroundImageTopPosition } from '../../utils/image_style';
@@ -63,9 +64,10 @@ class WelcomeBigScreenContent extends Component {
 
   render() {
     const sportLightLogo = DeviceInfo.isTablet() ? Images.spotlight_one_line : Images.spotlight_one_line_small;
+    const { insets } = this.props;
 
     return (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <View style={{flex: 1, backgroundColor: '#fff', paddingTop: insets.top}}>
         <ImageBackground
           source={Images.welcome_bg}
           style={{ width: '100%', height: '100%', backgroundColor: '#fff'}}
@@ -92,4 +94,4 @@ class WelcomeBigScreenContent extends Component {
   }
 }
 
-export default WelcomeBigScreenContent;
+export default withSafeAreaInsets(WelcomeBigScreenContent);

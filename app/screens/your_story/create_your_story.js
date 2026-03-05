@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, StatusBar, BackHandler } from 'react-native';
-import {HeaderBackButton} from '@react-navigation/elements';
+import { View, StatusBar, BackHandler, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Color } from '../../assets/stylesheets/base_style';
+import { Color, Style } from '../../assets/stylesheets/base_style';
 
 import { withTranslation } from 'react-i18next';
 
@@ -16,7 +16,7 @@ import Form from '../../models/Form';
 import ProgressHeader from '../../components/YourStory/ProgressHeader';
 import Questions from '../../components/Questions';
 import YourStoryFinishComponent from '../../components/YourStory/YourStoryFinishComponent';
-import YourStoryAlertMessageComponent from '../../components/YourStory/YourStoryAlertMessageComponent';
+import ExitConfirmationComponent from '../../components/YourStory/ExitConfirmationComponent';
 
 // Redux
 import { connect } from 'react-redux';
@@ -25,6 +25,7 @@ import { setCurrentQuestionIndex } from '../../actions/currentQuestionIndexActio
 import { setCurrentQuiz } from '../../actions/currentQuizAction';
 import uuidv4 from '../../utils/uuidv4';
 import HomeButton from '../../components/Toolbar/HomeButton';
+import BottomSheetModalComponent from '../../components/shared/BottomSheetModalComponent';
 
 
 class CreateYourStory extends Component {
@@ -32,18 +33,18 @@ class CreateYourStory extends Component {
 
   constructor(props) {
     super(props);
+    this.modalRef = React.createRef();
 
     props.navigation.setOptions({
-      headerLeft: () => (<HeaderBackButton tintColor={"#fff"} onPress={() => {
-        this.alertRef.current?.setAlertVisibility(true);
-      }}/>),
+      headerLeft: () => (
+        <TouchableOpacity style={{width: 48,}} onPress={() => this.showExitConfirmation()}>
+          <Icon name='arrow-back' size={24} style={{color: '#fff'}}/>
+        </TouchableOpacity>
+      ),
       headerRight: () => (<HomeButton onPress={() => {
         this.setState({action: 'Home'});
-        this.alertRef.current?.setAlertVisibility(true);
       }}/>),
     });
-
-    this.alertRef = React.createRef(null);
   }
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class CreateYourStory extends Component {
     this.backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       () => {
-        this.alertRef.current?.setAlertVisibility(true);
+        this.showExitConfirmation();
         return true;
       }
     );
@@ -60,6 +61,11 @@ class CreateYourStory extends Component {
 
   componentWillUnmount() {
     this.backHandler.remove();
+  }
+
+  showExitConfirmation() {
+    this.modalRef.current?.setContent(<ExitConfirmationComponent modalRef={this.modalRef} exitScreen={() => this.props.navigation.goBack()} />);
+    this.modalRef.current?.present();
   }
 
   _setForm(form_id) {
@@ -104,7 +110,7 @@ class CreateYourStory extends Component {
         { !this.state.loading && !!currentQuestion && Questions(currentQuestion) }
         { !this.state.loading && !currentQuestion && this.renderEnd() }
 
-        <YourStoryAlertMessageComponent ref={this.alertRef} />
+        <BottomSheetModalComponent ref={this.modalRef} />
       </View>
     );
   }

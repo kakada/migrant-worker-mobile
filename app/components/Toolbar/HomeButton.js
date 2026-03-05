@@ -14,10 +14,10 @@ class HomeButton extends Component {
   render() {
     return (
       <TouchableOpacity
-        style={{width: 48}}
+        style={{width: 48, justifyContent: 'center', alignItems: 'flex-end'}}
         onPress={() => this.onPress()}>
 
-        <Icon name={'home'} size={30} style={{color: '#fff'}}/>
+        <Icon name={'home'} size={26} style={{color: '#fff'}}/>
       </TouchableOpacity>
     );
   }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
-  SafeAreaView,
   ScrollView,
 } from 'react-native';
 
@@ -25,7 +23,7 @@ import { setCurrentUser } from '../actions/currentUserAction';
 class More extends Component {
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <ScrollView>
           <UserProfile navigation={this.props.navigation}/>
           <AboutList navigation={this.props.navigation}/>
@@ -39,7 +37,7 @@ class More extends Component {
 
           <AppVersion />
         </ScrollView>
-      </SafeAreaView>
+      </View>
     )
   }
 }
