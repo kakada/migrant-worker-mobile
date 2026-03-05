@@ -72,3 +72,5 @@ ehthumbs.db
 Desktop.ini
 *.bak
 *.orig
+
+app/config/environment.js
