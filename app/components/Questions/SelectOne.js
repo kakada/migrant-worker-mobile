@@ -13,8 +13,9 @@ import Option from '../../models/Option';
 
 import NextButton from '../YourStory/NextButton';
 import QuestionName from './questionName';
-import AlertMessage from '../AlertMessage';
 import RadioButtonComponent from '../shared/RadioButtonComponent';
+import BottomSheetModalComponent from '../shared/BottomSheetModalComponent';
+import YourStoryAlertMessageComponent from '../YourStory/YourStoryAlertMessageComponent';
 
 import { connect } from 'react-redux';
 import { setCurrentQuestionIndex } from '../../actions/currentQuestionIndexAction';
@@ -24,6 +25,7 @@ class QuestionsSelectOne extends Component {
   constructor(props) {
     super(props)
 
+    this.modalRef = React.createRef();
     this.state = {
       options: Option.byQuestion(props.question.id),
       answer: '',
@@ -69,7 +71,16 @@ class QuestionsSelectOne extends Component {
 
   _onPressNext() {
     if (!!this.state.selectedOption.alert_message) {
-      return this.setState({showAlert: true});
+      this.modalRef.current?.setContent(
+        <YourStoryAlertMessageComponent
+          warning={this.state.selectedOption.warning}
+          message={this.state.selectedOption.alert_message}
+          audio={this.state.selectedOption.alert_audio}
+          onPress={() => this._handleHideMessage()}
+        />
+      );
+      this.modalRef.current?.present();
+      return;
     }
 
     this._handleNext();
@@ -90,7 +101,7 @@ class QuestionsSelectOne extends Component {
   }
 
   _handleHideMessage() {
-    this.setState({showAlert: false});
+    this.modalRef.current?.dismiss();
 
     if (this.state.selectedOption.recursive) {
       this._resetCurrentQuestion();
@@ -117,13 +128,7 @@ class QuestionsSelectOne extends Component {
           <NextButton disabled={!this.state.answer} onPress={() => this._onPressNext() } />
         </View>
 
-        <AlertMessage
-          show={this.state.showAlert}
-          warning={this.state.selectedOption.warning}
-          message={this.state.selectedOption.alert_message}
-          onPressAction={() => this._handleHideMessage()}
-          audio={this.state.selectedOption.alert_audio}
-        />
+        <BottomSheetModalComponent ref={this.modalRef} />
       </>
     );
   }

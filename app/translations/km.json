@@ -1,10 +1,7 @@
 {
     "translation": {
-        "CountriesListingScreen": {
-            "HeaderTitle": "ជ្រើសរើសប្រទេសចំណាកស្រុក",
-        },
         "AboutScreen": {
-            "HeaderTitle": "អំពីអ៊ែបនេះ",
+            "HeaderTitle": "អំពីអ៊ែបនេះ"
         },
         "RegisterScreen": {
             "HeaderTitle": "ចុះឈ្មោះ",
@@ -113,6 +110,9 @@
         },
         "NotificationDetailScreen": {
             "HeaderTitle": "សារជូនដំណឹងពិស្ដារ"
+        },
+        "DeleteAccount": {
+            "UserIdIsIncorrect": "លេខសម្គាល់/ID មិនត្រឹមត្រូវ សូមពិនិត្យឡើងវិញ"
         }
     }
 }

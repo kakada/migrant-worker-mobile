@@ -20,6 +20,8 @@ import AboutScreen from '../screens/about';
 import ViewVideoScreen from '../screens/view_video';
 import ImageViewScreen from '../screens/image_view';
 import ListVideosScreen from '../screens/list_videos';
+import DeleteAccountScreen from '../screens/delete_account';
+import DeleteAccountSuccessScreen from '../screens/delete_account_success';
 
 import YourDepartureScreen from '../screens/your_departure/your_departure';
 
@@ -218,6 +220,9 @@ class AppNavigator extends Component {
           })}
         />
         <Stack.Screen name="UserFormScreen" component={RegisterScreen} options={{ title: "កែតម្រូវគណនី" }} />
+
+        <Stack.Screen name="DeleteAccountScreen" component={DeleteAccountScreen} options={{ title: "លុបគណនីរបស់ខ្ញុំ" }} />
+        <Stack.Screen name="DeleteAccountSuccessScreen" component={DeleteAccountSuccessScreen} options={{ header: null }} />
 
         <Stack.Screen name="LookingForHelpScreen" component={LookingForHelpScreen}
           options={({route, navigation}) => ({

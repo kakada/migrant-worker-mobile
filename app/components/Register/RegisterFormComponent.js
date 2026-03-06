@@ -9,6 +9,7 @@ import { Color } from '../../assets/stylesheets/base_style';
 import BigButtonComponent from '../shared/BigButtonComponent';
 import RegisterTextInputComponent from './RegisterTextInputComponent';
 import RegisterVoiceRecorderComponent from './RegisterVoiceRecorderComponent';
+import RegisterUserIdComponent from './RegisterUserIdComponent';
 import RegistrationConfirmationComponent from '../shared/RegistrationConfirmationComponent';
 import SectionSeparatorComponent from '../shared/SectionSeparatorComponent';
 import CustomAudioPlayerComponent from '../shared/CustomAudioPlayerComponent';
@@ -170,6 +171,8 @@ const RegisterFormComponent = (props) => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
+        {/* { renderUserId() } */}
+        <RegisterUserIdComponent uuid={state.uuid} />
         {renderTextInput(list[0])}
         {renderSexOption()}
         {renderTextInput(list[1])}

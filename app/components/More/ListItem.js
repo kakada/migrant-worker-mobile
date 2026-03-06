@@ -14,7 +14,7 @@ import { withTranslation } from 'react-i18next';
 
 class ListItem extends Component {
   render() {
-    const { iconImage, title, avata } = this.props;
+    const { iconImage, title, avata, customIcon } = this.props;
 
     return (
       <TouchableOpacity
@@ -23,7 +23,10 @@ class ListItem extends Component {
         {...this.props}>
 
         <View style={styles.menuIconWrapper}>
-          <Image source={avata} style={styles.menuIcon} />
+          { !!customIcon
+            ? customIcon
+            : <Image source={avata} style={styles.menuIcon} />
+          }
         </View>
 
         <View style={styles.menuTitleWrapper}>

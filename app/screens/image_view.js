@@ -16,7 +16,6 @@ import { withTranslation } from 'react-i18next';
 import i18n from 'i18next';
 // import CategoryImage from '../models/CategoryImage';
 import Category from '../models/Departure';
-import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 class ImageView extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class ImageView extends Component {
 
   componentDidMount() {
     if (this.state.current_image.image == "offline") {
-      let image = resolveAssetSource(this.state.current_image.offlineSource);
+      let image = Image.resolveAssetSource(this.state.current_image.offlineSource);
       this.setState({imageWidth: image.width, imageHeight: image.height});
     } else {
       Image.getSize(`file://${this.state.current_image.image}`, (width, height) => {

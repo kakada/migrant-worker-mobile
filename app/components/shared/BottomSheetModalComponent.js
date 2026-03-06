@@ -1,19 +1,16 @@
 import React, { useCallback, useState } from 'react'
-import { StyleSheet, Keyboard, View, Text } from 'react-native'
+import { StyleSheet, Keyboard } from 'react-native'
 import {
   BottomSheetModal,
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 
-import {defaultSnapPoints} from '../../constants/modal_constant'
-
 const {useImperativeHandle} = React
 
 const BottomSheetModalComponent = (props, ref) => {
   const modalRef = React.useRef()
   const [content, setContent] = useState(null)
-  const [snapPoints, setSnapPoints] = useState(props.snapPoints || defaultSnapPoints)
 
   const present = () => {
     Keyboard.dismiss()
@@ -34,7 +31,6 @@ const BottomSheetModalComponent = (props, ref) => {
 
   useImperativeHandle(ref, () => ({
     setContent,
-    setSnapPoints,
     present,
     dismiss,
     expand,
@@ -55,9 +51,9 @@ const BottomSheetModalComponent = (props, ref) => {
       enablePanDownToClose={true}
       backdropComponent={renderBackdrop}
       backgroundStyle={{backgroundColor: '#ffffff'}}
-      snapPoints={snapPoints}
       onDismiss={() => !!props.onDismiss && props.onDismiss()}
       onChange={(index) => !!props.onChange && props.onChange(index)}
+      enableDynamicSizing
     >
       <BottomSheetScrollView style={styles.contentContainer}>
         { content }
