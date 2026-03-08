@@ -82,6 +82,10 @@ const DeleteAccountScreen = withTranslation()((props) => {
   }
 
   const deletionForm = () => {
+    let bottomSheetSnapPoint = (deleteReasons.length + 1) * 7.2;
+    if (bottomSheetSnapPoint >= 80)
+      bottomSheetSnapPoint = 80
+
     return (
       <React.Fragment>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -116,6 +120,8 @@ const DeleteAccountScreen = withTranslation()((props) => {
           hideListItemAudio={true}
           selectedItem={selectedReason}
           onSelectItem={(item) => setSelectedReason(item)}
+          snapPoints={[`${bottomSheetSnapPoint}%`]}
+          pickerContentHeight={bottomSheetSnapPoint * 8.4}
         />
 
         <BigButtonComponent
