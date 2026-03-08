@@ -62,11 +62,6 @@ const DeleteAccountScreen = withTranslation()((props) => {
           </View>
 
           <Text style={styles.userIdInfoLabel}>3. ថតចម្លង លេខសម្គាល់/ID</Text>
-          <BigButtonComponent
-            label="យល់ព្រម"
-            buttonStyle={{marginTop: 16}}
-            onPress={() => modalRef.current?.dismiss()}
-          />
         </React.Fragment>
       </BottomSheetModalContentComponent>
     );
@@ -82,7 +77,7 @@ const DeleteAccountScreen = withTranslation()((props) => {
   }
 
   const deletionForm = () => {
-    let bottomSheetSnapPoint = (deleteReasons.length + 1) * 7.2;
+    let bottomSheetSnapPoint = (deleteReasons.length + 1) * 7.7;
     if (bottomSheetSnapPoint >= 80)
       bottomSheetSnapPoint = 80
 
