@@ -112,6 +112,21 @@ class AppNavigator extends Component {
     )
   }
 
+  headerTitle(title) {
+    return (
+      <View style={{width: '100%'}}
+        onLayout={(e) => {
+          this.setState({ containerWidth: e.nativeEvent.layout.width });
+        }}
+      >
+        { this.state.isEllipsis
+          ? <Ticker msPerPX={50} loop={true}>{this.titleText(title)}</Ticker>
+          : this.titleText(title)
+        }
+      </View>
+    );
+  }
+
   titleText(title) {
     return (
       <Text
@@ -162,20 +177,7 @@ class AppNavigator extends Component {
 
         <Stack.Screen name="LeafCategoryScreen" component={LeafCategoryScreen}
           options={({route, navigation}) => ({
-            headerTitle: () => (
-              <View style={{width: '100%'}}
-                onLayout={(e) => {
-                  this.setState({
-                    containerWidth: e.nativeEvent.layout.width
-                  });
-                }}
-              >
-                { this.state.isEllipsis
-                  ? <Ticker msPerPX={50} loop={true}>{this.titleText(route.params.title)}</Ticker>
-                  : this.titleText(route.params.title)
-                }
-              </View>
-            ),
+            headerTitle: () => ( this.headerTitle(route.params.title) ),
             headerStyle: { backgroundColor: Color.beforeYouGoColor },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })}
@@ -234,7 +236,7 @@ class AppNavigator extends Component {
 
         <Stack.Screen name="CreateYourStoryScreen" component={CreateYourStoryScreen}
           options={({route, navigation}) => ({
-            title: this.props.t('CreateYourStoryScreen.HeaderTitle'),
+            headerTitle: () => ( this.headerTitle(this.props.t('CreateYourStoryScreen.HeaderTitle')) ),
             headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.pink, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
