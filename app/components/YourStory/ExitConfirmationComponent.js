@@ -42,7 +42,7 @@ const ExitConfirmationComponent = React.forwardRef((props, ref) => {
         </View>
         {renderAudioPlayer()}
       </View>
-      <Text style={{fontFamily: FontFamily.body, marginTop: 16, marginBottom: 32}}>តើអ្នកប្រាកដថាចង់ចាកចេញពីហ្គេមនេះដែរឬទេ?</Text>
+      <Text style={{fontFamily: FontFamily.body, marginTop: 16, marginBottom: 32}}>តើអ្នកប្រាកដថាចង់ចាកចេញពីសាច់រឿងនេះដែរឬទេ?</Text>
 
       <View style={{width: '100%', paddingHorizontal: 16}}>
         <BigButtonComponent
