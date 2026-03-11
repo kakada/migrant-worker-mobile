@@ -56,18 +56,21 @@ class Other extends Component {
         <ListItem
           title={"ចែកចាយ/ចែករំលែកអ៊ែប"}
           avata={Images.share}
+          color="#2F80ED"
           onPress={() => this.onShare() }
         />
 
         <ListItem
           title={"គោលការណ៍អំពីឯកជនភាព"}
           avata={Images.doc}
+          color="#6C757D"
           onPress={() => this.openLink(endpointHelper.getAbsoluteEndpoint('privacy-policy'))}
         />
 
         <ListItem
           title={"គោលការណ៍ និងលក្ខខណ្ឌ"}
           avata={Images.doc}
+          color="#6C757D"
           onPress={() => this.openLink(endpointHelper.getAbsoluteEndpoint('terms-and-conditions'))}
         />
       </View>
