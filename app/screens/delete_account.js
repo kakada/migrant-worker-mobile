@@ -12,6 +12,7 @@ import { Style } from '../assets/stylesheets/base_style';
 import BigButtonComponent from '../components/shared/BigButtonComponent';
 import BottomSheetModalComponent from '../components/shared/BottomSheetModalComponent';
 import BottomSheetModalContentComponent from '../components/shared/BottomSheetModalContentComponent';
+import LoadingIndicator from '../components/loading_indicator';
 import DeleteReason from '../models/DeleteReason';
 import UserService from '../services/user_service';
 
@@ -20,6 +21,7 @@ const DeleteAccountScreen = withTranslation()((props) => {
   const [selectedReason, setSelectedReason] = useState(null);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [isInvalidId, setIsInvalidId] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const modalRef = React.createRef();
   const deleteReasons = DeleteReason.getAll().map(item => {
     return { label: item['name_km'], value: item['id'] }
@@ -77,9 +79,11 @@ const DeleteAccountScreen = withTranslation()((props) => {
   }
 
   const deletionForm = () => {
-    let bottomSheetSnapPoint = (deleteReasons.length + 1) * 7.7;
-    if (bottomSheetSnapPoint >= 80)
-      bottomSheetSnapPoint = 80
+    const SNAP_POINT_PERCENTAGE_PER_ITEM = 7.7;
+    const MAX_SNAP_POINT_PERCENTAGE = 80;
+    let bottomSheetSnapPoint = (deleteReasons.length + 1) * SNAP_POINT_PERCENTAGE_PER_ITEM;
+    if (bottomSheetSnapPoint >= MAX_SNAP_POINT_PERCENTAGE)
+      bottomSheetSnapPoint = MAX_SNAP_POINT_PERCENTAGE
 
     return (
       <React.Fragment>
@@ -94,6 +98,7 @@ const DeleteAccountScreen = withTranslation()((props) => {
             placeholder='បញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក'
             value={userId}
             style={styles.textInput}
+            placeholderTextColor={Color.gray}
             onChangeText={(value) => setUserId(value)}
           />
         </View>
@@ -124,13 +129,16 @@ const DeleteAccountScreen = withTranslation()((props) => {
           buttonStyle={{marginTop: 32, backgroundColor: Color.red}}
           disabled={!userId || !selectedReason}
           onPress={() => {
+            setIsLoading(true);
             new UserService().destroy({
               userId: userId,
               deleteReasonId: selectedReason,
               onSuccess: () => {
+                setIsLoading(false);
                 props.navigation.navigate('DeleteAccountSuccessScreen');
               },
               onFailure: (status) => {
+                setIsLoading(false);
                 setIsInvalidId(true);
                 setSnackbarVisible(true)
               }
@@ -142,40 +150,45 @@ const DeleteAccountScreen = withTranslation()((props) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={{flexGrow: 1, padding: 16}}>
-        <Text style={styles.label}>
-          សូមបញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក និងជ្រើសរើសមូលហេតុសម្រាប់លុបគណនីរបស់អ្នក។
-        </Text>
-        <Text style={[styles.label, { marginTop: 8 }]}>
-          Please enter your user ID and select a reason for deleting your account.
-        </Text>
-
-        <View style={{width: '100%', height: 2, marginVertical: 22, backgroundColor: Color.border, borderRadius: 4}}/>
-
-        { deletionForm() }
-
-        <Text style={[styles.noteLabel, {marginTop: 18}]}>
-          *** គណនីរបស់អ្នកនឹងត្រូវបានកំណត់ពេលសម្រាប់លុប។ ទិន្នន័យនឹងត្រូវបានលុបចោលជាអចិន្ត្រៃយ៍បន្ទាប់ពី 30 ថ្ងៃ។
-        </Text>
-        <Text style={styles.noteLabel}>
-          Your account will be scheduled for deletion. The data will be permanently removed after 30 days.
-        </Text>
-
-        <BottomSheetModalComponent ref={modalRef} />
-
-        <Snackbar
-          visible={snackbarVisible}
-          onDismiss={() => setSnackbarVisible(false)}
-          duration={3000}
-          style={{backgroundColor: Color.red, width: '100%', marginLeft: 16}}
-        >
-          <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: Color.white }}>
-            {props.t("DeleteAccount.UserIdIsIncorrect")}
+    <>
+      <LoadingIndicator loading={isLoading}
+        customStyle={{width: '100%', height: '100%', position: 'absolute', opacity: 0.7, zIndex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}
+      />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{flexGrow: 1, padding: 16}}>
+          <Text style={styles.label}>
+            សូមបញ្ចូលលេខសម្គាល់អ្នកប្រើប្រាស់របស់អ្នក និងជ្រើសរើសមូលហេតុសម្រាប់លុបគណនីរបស់អ្នក។
           </Text>
-        </Snackbar>
-      </View>
-    </TouchableWithoutFeedback>
+          <Text style={[styles.label, { marginTop: 8 }]}>
+            Please enter your user ID and select a reason for deleting your account.
+          </Text>
+
+          <View style={{width: '100%', height: 2, marginVertical: 22, backgroundColor: Color.border, borderRadius: 4}}/>
+
+          { deletionForm() }
+
+          <Text style={[styles.noteLabel, {marginTop: 18}]}>
+            *** គណនីរបស់អ្នកនឹងត្រូវបានកំណត់ពេលសម្រាប់លុប។ ទិន្នន័យនឹងត្រូវបានលុបចោលជាអចិន្ត្រៃយ៍បន្ទាប់ពី 30 ថ្ងៃ។
+          </Text>
+          <Text style={styles.noteLabel}>
+            Your account will be scheduled for deletion. The data will be permanently removed after 30 days.
+          </Text>
+
+          <BottomSheetModalComponent ref={modalRef} />
+
+          <Snackbar
+            visible={snackbarVisible}
+            onDismiss={() => setSnackbarVisible(false)}
+            duration={3000}
+            style={{backgroundColor: Color.red, width: '100%', marginLeft: 16}}
+          >
+            <Text style={{ fontSize: FontSize.small, fontFamily: FontFamily.body, color: Color.white }}>
+              {props.t("DeleteAccount.UserIdIsIncorrect")}
+            </Text>
+          </Snackbar>
+        </View>
+      </TouchableWithoutFeedback>
+    </>
   )
 })
 
