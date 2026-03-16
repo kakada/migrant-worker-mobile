@@ -17,4 +17,5 @@ export default Color = {
   green: '#009e69',
   beforeYouGoColor: '#bf2c19',
   divideLineColor: '#e6e7e9',
+  disabledInputColor: '#f0f0f0',
 };

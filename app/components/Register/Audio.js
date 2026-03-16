@@ -238,12 +238,13 @@ export default class Audio extends Component {
       <View style={{justifyContent: 'center', alignItems: 'center'}}>
         { this.state.showHint && <Text style={styles.hint}>ចុចនិងសង្កត់ដើម្បីថតសម្លេង</Text> }
         <TouchableOpacity
-          style={[styles.button, {borderWidth: 3, borderColor: Color.primary, backgroundColor: Color.white}]}
-          onPress={() => this._onPress()}
+          style={[styles.button, {borderWidth: 3}, !!this.props.disabled ? {borderColor: Color.btnDisabled, backgroundColor: Color.disabledInputColor} : {borderColor: Color.primary, backgroundColor: Color.white}]}
+          disabled={!!this.props.disabled}
+          onPress={() =>  this._onPress()}
           onLongPress={() => this._onLongPress()}
           onPressOut={() => this._onPressOut()}
         >
-          <AwesomeIcon name={'microphone'} color={Color.primary} size={36} style={{marginRight: 1, height: 36}} />
+          <AwesomeIcon name={'microphone'} color={!!this.props.disabled ? Color.btnDisabled : Color.primary} size={36} style={{marginRight: 1, height: 36}} />
         </TouchableOpacity>
       </View>
     )
@@ -306,7 +307,6 @@ export default class Audio extends Component {
   }
 
   render() {
-    // return (null);
     return (
       <View style={[{height: 180}, this.props.containerStyle]}>
         { this.state.visiblePlayButton && this._renderButtonPlay() }

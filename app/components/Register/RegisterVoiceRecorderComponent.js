@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import Audio from './Audio';
 import styles from '../../styles/registerScreenStyle';
+import { Color } from '../../assets/stylesheets/base_style';
 import registerHelper from '../../helpers/register_helper';
 import {setCurrentPlayingAudio} from '../../actions/currentPlayingAudioAction';
 
@@ -24,9 +25,9 @@ const RegisterVoiceRecorderComponent = (props) => {
   }, [currentPlayingAudio])
 
   return (
-    <View style={[styles.voiceRecord, registerHelper.validationBorder(props.voiceRecord, 'voice', props.isFormValid)]}>
+    <View style={[styles.voiceRecord, registerHelper.validationBorder(props.voiceRecord, 'voice', props.isFormValid), !!props.disabled && {backgroundColor: Color.disabledInputColor}]}>
       <View style={{flexDirection: 'row'}}>
-        <Text variant="regular" style={{marginTop: 4}}>{t('RegisterScreen.RecordVoice')}</Text>
+        <Text variant="regular" style={[{marginTop: 4}, !!props.disabled && { color: 'grey' }]}>{t('RegisterScreen.RecordVoice')}</Text>
         <View style={{flex: 1, alignItems: 'flex-end', marginRight: -14, marginTop: 2}}>
           {props.audioButton()}
         </View>
@@ -37,6 +38,7 @@ const RegisterVoiceRecorderComponent = (props) => {
         callback={(path) => props.updateVoiceRecord(path)}
         audioPath={props.voiceRecord}
         audioPlayer={audioPlayer}
+        disabled={!!props.disabled}
         updateAudioPlayer={(sound) => {
           dispatch(setCurrentPlayingAudio(null));
           setAudioPlayer(sound);
