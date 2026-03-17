@@ -34,6 +34,7 @@ const RegisterFormComponent = (props) => {
     voiceRecord: props.currentUser.voiceRecord || "",
     errors: {},
     isFormValid: false,
+    isGuest: false
   })
   const currentPlayingAudio = useSelector(state => state.currentPlayingAudio);
 
@@ -42,7 +43,13 @@ const RegisterFormComponent = (props) => {
     if ((!!state.name && !!state.sex && !!state.age) || !!state.voiceRecord)
       isValid = true;
 
-    setState({ isFormValid: isValid })
+    if (!!props.currentUser.uuid && (!state.sex && !state.age))
+      setState({
+        isGuest: true,
+        isFormValid: true
+      });
+    else
+      setState({ isFormValid: isValid })
   }, [state.name, state.sex, state.age, state.voiceRecord]);
 
   useEffect(() => {
@@ -70,6 +77,7 @@ const RegisterFormComponent = (props) => {
               textContainerStyle={registerHelper.validationBorder(state[item.stateName], item.stateName, state.isFormValid)}
               audioButton={() => renderAudioBtn(`${item.stateName}-input`, item.audioFilename)}
               maxLength={item.maxLength || null}
+              disabled={!!state.isGuest}
            />
   }
 
@@ -87,12 +95,20 @@ const RegisterFormComponent = (props) => {
     return (
       <View style={[{ marginBottom: 24 }, registerHelper.validationBorder(state.sex, 'sex', state.isFormValid)]}>
         <View style={{ marginBottom: 10, flexDirection: 'row' }}>
-          <Text variant="regular" style={{ flex: 1 }}>{t('RegisterScreen.ChooseGender')}</Text>
+          <Text variant="regular" style={[{ flex: 1 }, !!state.isGuest && {color: 'grey'} ]}>{t('RegisterScreen.ChooseGender')}</Text>
           <View style={{marginRight: !!state.sex ? 2 : -4}}>
             {renderAudioBtn('gender-picker', 'choose_gender.mp3')}
           </View>
         </View>
-        <SexOption sex={state.sex} onPress={(value) => setState({sex: value})} />
+        <SexOption
+          sex={state.sex}
+          disabled={state.isGuest}
+          onPress={(value) => {
+            if (state.isGuest) return;
+
+            setState({sex: value})
+          }}
+        />
       </View>
     )
   }
@@ -102,6 +118,7 @@ const RegisterFormComponent = (props) => {
               currentUser={currentUser}
               voiceRecord={state.voiceRecord}
               isFormValid={state.isFormValid}
+              disabled={!!state.isGuest}
               updateVoiceRecord={(audioPath) => setState({voiceRecord: audioPath})}
               audioButton={() => renderAudioBtn('voice-record', 'record_your_voice.mp3')}
            />
@@ -156,10 +173,14 @@ const RegisterFormComponent = (props) => {
     }
     return <BigButtonComponent
               label={button[props.action].label}
-              disabled={!state.isFormValid}
+              disabled={!state.isFormValid || !!state.isGuest}
               rightComponent={renderAudioBtn('save-button', button[props.action].audio, Color.white, Color.primary)}
               onPress={() => props.action == 'register' ? showConsentForm() : submit()}
-              onDisabledPress={() => ToastAndroid.show(t("RegisterScreen.WarningFillRequiredInfo"), ToastAndroid.SHORT)}
+              onDisabledPress={() => {
+                if (!!state.isGuest) return;
+
+                ToastAndroid.show(t("RegisterScreen.WarningFillRequiredInfo"), ToastAndroid.SHORT)
+              }}
            />
   }
 
@@ -171,7 +192,6 @@ const RegisterFormComponent = (props) => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        {/* { renderUserId() } */}
         <RegisterUserIdComponent uuid={state.uuid} />
         {renderTextInput(list[0])}
         {renderSexOption()}

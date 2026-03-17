@@ -1,6 +1,6 @@
 {
   "name": "MigrantWorkerMobile",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -53,6 +53,7 @@
     "react-native-tab-view": "^4.2.2",
     "react-native-text-highlighter": "^1.0.5",
     "react-native-text-ticker": "^1.15.0",
+    "react-native-ticker-tape": "^0.1.1",
     "react-native-vector-icons": "^10.3.0",
     "react-native-video": "^6.18.0",
     "react-native-webview": "^13.16.0",

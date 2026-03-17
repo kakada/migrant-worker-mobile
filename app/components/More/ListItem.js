@@ -14,7 +14,7 @@ import { withTranslation } from 'react-i18next';
 
 class ListItem extends Component {
   render() {
-    const { iconImage, title, avata, customIcon } = this.props;
+    const { iconImage, title, avata, customIcon, color } = this.props;
 
     return (
       <TouchableOpacity
@@ -22,10 +22,10 @@ class ListItem extends Component {
         activeOpacity={0.8}
         {...this.props}>
 
-        <View style={styles.menuIconWrapper}>
+        <View style={[styles.menuIconWrapper, { borderColor: color || Color.primary }]}>
           { !!customIcon
             ? customIcon
-            : <Image source={avata} style={styles.menuIcon} />
+            : <Image source={avata} style={[styles.menuIcon, { tintColor: color || Color.primary }]} />
           }
         </View>
 
@@ -61,14 +61,15 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 10,
-    backgroundColor: Color.primary,
+    // backgroundColor: Color.primary,
+    borderWidth: 1.6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   menuIcon: {
     width: 20,
     height: 20,
-    tintColor: Color.white
+    // tintColor: Color.white,
   },
   menuTitleWrapper: {
     flex: 1,

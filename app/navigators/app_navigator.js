@@ -2,10 +2,11 @@ import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {Ticker} from 'react-native-ticker-tape';
 
 import { withTranslation } from 'react-i18next';
 import i18n from 'i18next';
-import { StatusBar } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 
 import { Color, FontFamily, FontSize } from '../assets/stylesheets/base_style';
 
@@ -55,7 +56,11 @@ export function navigate(name, params) {
 }
 
 class AppNavigator extends Component {
-  state = { loading: true };
+  state = {
+    loading: true,
+    containerWidth: 0,
+    isEllipsis: false
+  };
 
   async componentDidMount() {
     const isNewSession = await sessionHelper.isNewSession();
@@ -107,6 +112,38 @@ class AppNavigator extends Component {
     )
   }
 
+  headerTitle(title) {
+    return (
+      <View style={{width: '100%'}}
+        onLayout={(e) => {
+          this.setState({ containerWidth: e.nativeEvent.layout.width });
+        }}
+      >
+        { this.state.isEllipsis
+          ? <Ticker msPerPX={50} loop={true}>{this.titleText(title)}</Ticker>
+          : this.titleText(title)
+        }
+      </View>
+    );
+  }
+
+  titleText(title) {
+    return (
+      <Text
+        numberOfLines={1}
+        onTextLayout={(e) => {
+          const { lines } = e.nativeEvent;
+          this.setState({
+            isEllipsis: this.state.containerWidth < lines[0].width
+          });
+        }}
+        style={{ color: 'white', fontFamily: FontFamily.title, fontSize: 20, textAlign: 'center' }}
+      >
+        {title}
+      </Text>
+    )
+  }
+
   _appStack() {
     return (
       <>
@@ -140,7 +177,7 @@ class AppNavigator extends Component {
 
         <Stack.Screen name="LeafCategoryScreen" component={LeafCategoryScreen}
           options={({route, navigation}) => ({
-            title: route.params.title,
+            headerTitle: () => ( this.headerTitle(route.params.title) ),
             headerStyle: { backgroundColor: Color.beforeYouGoColor },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),
           })}
@@ -199,7 +236,7 @@ class AppNavigator extends Component {
 
         <Stack.Screen name="CreateYourStoryScreen" component={CreateYourStoryScreen}
           options={({route, navigation}) => ({
-            title: this.props.t('CreateYourStoryScreen.HeaderTitle'),
+            headerTitle: () => ( this.headerTitle(this.props.t('CreateYourStoryScreen.HeaderTitle')) ),
             headerShadowVisible: false,
             headerStyle: { backgroundColor: Color.pink, elevation: 0 },
             headerRight: (props) => (<HomeButton navigation={navigation}/>),

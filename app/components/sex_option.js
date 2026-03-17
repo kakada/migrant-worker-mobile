@@ -42,6 +42,17 @@ class SexOption extends Component {
             position: 'absolute',
             marginHorizontal: 10
           }}>{item[`title_${i18n.language}`]}</Text>
+
+          { !!this.props.disabled &&
+            <View style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(78, 78, 78, 0.64)', // Adjust 0.5 for darkness
+            }} />
+          }
         </ImageBackground>
       </TouchableOpacity>
     )

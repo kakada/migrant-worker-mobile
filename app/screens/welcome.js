@@ -22,8 +22,7 @@ class Welcome extends React.Component {
     this._clearAudioPlayer();
     let uuid = uuidv4();
     User.upsert({uuid: uuid, name: "ភ្ញៀវ", created_at: new Date()});
-    // TODO: Enable upload user when queue worker is ready
-    // User.uploadAsync(uuid);
+    User.uploadAsync(uuid);
     try {
       await AsyncStorage.setItem('IS_NEW_SESSION', 'true');
     } catch (e) {

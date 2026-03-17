@@ -14,7 +14,7 @@ export default class LoadingIndicator extends Component {
     }
 
     return (
-      <View style={ styles.loading }>
+      <View style={[ styles.loading, this.props.customStyle ]}>
         <ActivityIndicator
           animating={ true }
           style={[ styles.loading ]}

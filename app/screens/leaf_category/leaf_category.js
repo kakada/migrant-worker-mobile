@@ -36,6 +36,9 @@ const tagsStyles = {
   li: {
     marginLeft: 6
   },
+  a: {
+    color: Color.primary,
+  },
 }
 
 let _this = null;

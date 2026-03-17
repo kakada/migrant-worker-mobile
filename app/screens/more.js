@@ -32,7 +32,8 @@ class More extends Component {
 
           <ListItem
             title="លុបគណនីរបស់ខ្ញុំ"
-            customIcon={<Icon name="user-x" size={20} color='white' />}
+            customIcon={<Icon name="user-x" size={20} color={Color.red} />}
+            color={Color.red}
             onPress={() => {
               this.props.navigation.navigate('DeleteAccountScreen')
             }}
@@ -41,6 +42,7 @@ class More extends Component {
           <ListItem
             title={"ចាកចេញ"}
             avata={Images.logout}
+            color="#5C6BC0"
             onPress={ () => this.props.setCurrentUser(null) }
           />
 
