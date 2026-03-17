@@ -5,7 +5,8 @@ const MODEL_NAME = 'DeleteReason';
 const DeleteReason = (() => {
   return {
     getAll,
-    create
+    create,
+    deleteAll,
   }
 
   function getAll() {
@@ -16,6 +17,16 @@ const DeleteReason = (() => {
     realm.write(() => {
       realm.create(MODEL_NAME, _buildData(item), 'modified');
     });
+  }
+
+  function deleteAll() {
+    let collection = realm.objects(MODEL_NAME);
+
+    if (collection.length > 0) {
+      realm.write(() => {
+        realm.delete(collection);
+      });
+    }
   }
 
   function _buildData(item) {
