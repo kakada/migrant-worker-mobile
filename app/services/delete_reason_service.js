@@ -13,8 +13,12 @@ export default class DeleteReasonService extends WebService {
         .then(res => JSON.parse(res.data))
         .then(body => {
           const data = body.data;
-          for (var i = 0; i < data.length; i++) {
-            DeleteReason.create(data[i]);
+          if (data != null && data.length > 0) {
+            DeleteReason.deleteAll();
+
+            for (var i = 0; i < data.length; i++) {
+              DeleteReason.create(data[i]);
+            }
           }
         })
     });

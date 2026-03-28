@@ -16,8 +16,9 @@ class Other extends Component {
   onShare = async () => {
     try {
       const result = await Share.share({
-        message: environment.serverUrl,
-        url: environment.serverUrl,
+        title: 'ចែកចាយ/ចែករំលែកអ៊ែប',
+        message: environment.appUrl,
+        url: environment.appUrl,
       });
 
       if (result.action === Share.sharedAction) {
