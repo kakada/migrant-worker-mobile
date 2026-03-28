@@ -87,7 +87,7 @@ android {
         applicationId "kh.org.childhelplinecambodia.myjourneys"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "1.0.4"
+        versionName "1.0.5"
         versionCode calculateVersionCode(versionName)
     }
     signingConfigs {
