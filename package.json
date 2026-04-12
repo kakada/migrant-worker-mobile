@@ -25,7 +25,7 @@
     "@react-navigation/stack": "^6.3.17",
     "@sentry/react-native": "^4.2.3",
     "apisauce": "3.2.2",
-    "axios": "^1.13.5",
+    "axios": "^1.15.0",
     "deprecated-react-native-prop-types": "^4.2.1",
     "i18next": "^19.9.2",
     "moment": "2.24.0",
